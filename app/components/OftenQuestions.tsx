@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useTranslations } from "next-intl";
-import { FAQPage } from "@/app/structured-data/FAQPage";
+// import { FAQPage } from "@/app/structured-data/FAQPage";
 import { FaqItem } from "../services/catalogService";
 
 type OftenQuestionsProps = {
@@ -83,7 +83,7 @@ const OftenQuestionsComponent: React.FC<OftenQuestionsProps> = ({
             </div>
           );
         })}
-      <FAQPage faqs={faqs || []} />{" "}
+      {/* <FAQPage faqs={faqs || []} />{" "} */}
     </>
   );
 };
