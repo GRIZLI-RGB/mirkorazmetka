@@ -238,6 +238,30 @@ export const MfoPageStructuredData = async ({
 	});
 
 	// WebPage schema
+	// const webPageSchema = {
+	// 	"@context": "https://schema.org",
+	// 	"@type": "WebPage",
+	// 	name:
+	// 		getAllSettings?.settings.mfo_page_meta_title ||
+	// 		t("mfo.title") ||
+	// 		"Рейтинг МФО",
+	// 	description:
+	// 		getAllSettings?.settings.mfo_page_meta_description ||
+	// 		t("mfo.description") ||
+	// 		"Рейтинг микрофинансовых организаций Украины",
+	// 	url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/mfo`,
+	// 	datePublished: dates.date_published,
+	// 	dateModified: dates.date_modified,
+	// 	author: {
+	// 		"@type": "Person",
+	// 		name: randomAuthor?.data?.name || "Эксперт MFoxa",
+	// 	},
+	// 	publisher: {
+	// 		"@type": "Organization",
+	// 		name: "MFoxa",
+	// 		url: "https://mfoxa.com.ua",
+	// 	},
+	// };
 	const webPageSchema = {
 		"@context": "https://schema.org",
 		"@type": "WebPage",
@@ -252,10 +276,6 @@ export const MfoPageStructuredData = async ({
 		url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/mfo`,
 		datePublished: dates.date_published,
 		dateModified: dates.date_modified,
-		author: {
-			"@type": "Person",
-			name: randomAuthor?.data?.name || "Эксперт MFoxa",
-		},
 		publisher: {
 			"@type": "Organization",
 			name: "MFoxa",
