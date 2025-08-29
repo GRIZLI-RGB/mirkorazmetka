@@ -173,8 +173,9 @@ export const MfoPageStructuredData = async ({
 			worstRating: "1",
 		},
 		itemReviewed: {
-			"@type": "WebPage",
+			"@type": "Organization",
 			name: getAllSettings?.settings.mfo_page_title || "Рейтинг МФО",
+			url: "https://mfoxa.com.ua",
 		},
 	};
 
