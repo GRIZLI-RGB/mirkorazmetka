@@ -154,7 +154,7 @@ export const ReviewsStructuredData = ({
 			url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/reviews`,
 		},
 		ratingCount: String(+stats.total_reviews || 1),
-		reviewValue: "4.5",
+		ratingValue: "4.5",
 		bestRating: "5",
 		worstRating: "1",
 	};
