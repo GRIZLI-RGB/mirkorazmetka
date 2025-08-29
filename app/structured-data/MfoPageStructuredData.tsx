@@ -131,7 +131,7 @@ export const MfoPageStructuredData = async ({
 				ratingValue: mfo.rating_average.toString(),
 				bestRating: "5",
 				worstRating: "1",
-				ratingCount: mfo.rating_count.toString(),
+				ratingCount: (mfo.rating_count || 1).toString(),
 			},
 		})),
 	};
