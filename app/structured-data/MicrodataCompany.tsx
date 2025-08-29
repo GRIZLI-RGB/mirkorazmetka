@@ -1,0 +1,167 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import Script from "next/script";
+import { MfoDetails } from "@/app/services/getMfoDetailsService";
+import { PageDatesResponse } from "@/app/services/PageDatesService";
+
+type MicrodataCompanyProps = {
+  company: string;
+  data: MfoDetails;
+  dates?: PageDatesResponse | null;
+};
+
+export const MicrodataCompany = ({ company, data, dates }: MicrodataCompanyProps) => {
+  // WebPage schema
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: data.name || "Информация о МФО",
+    description: `Условия займов и отзывы о ${data.name}`,
+    url: `https://mfoxa.com.ua/mfo/${company}`,
+    datePublished: dates?.date_published,
+    dateModified: dates?.date_modified,
+    publisher: {
+      "@type": "Organization",
+      name: "MFoxa",
+      url: "https://mfoxa.com.ua"
+    }
+  };
+
+  // BreadcrumbList schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Главная",
+        item: "https://mfoxa.com.ua"
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "МФО",
+        item: "https://mfoxa.com.ua/mfo"
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: data.name || "Компания",
+        item: `https://mfoxa.com.ua/mfo/${company}`
+      }
+    ]
+  };
+
+  // Organization schema for the MFO company
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "FinancialService",
+    name: data.name || "Название компании",
+    alternateName: data.legal_entity,
+    url: data.redirect_url || data.official_website,
+    logo: data.logo_url,
+    description: `Микрофинансовая организация ${data.name} - условия займов, отзывы клиентов`,
+    identifier: data.nbu_license,
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: data.phone,
+      email: data.email,
+      contactType: "customer service",
+      areaServed: "UA",
+      availableLanguage: ["Ukrainian", "Russian"]
+    },
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: data.legal_address,
+      addressCountry: "UA"
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: data.rating_average?.toString() || "0",
+      bestRating: "5",
+      worstRating: "1",
+      ratingCount: data.rating_count?.toString() || "0"
+    },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: `Тарифы ${data.name}`,
+      itemListElement: data.tariffs?.map((tariff: any, index: number) => ({
+        "@type": "Offer",
+        name: tariff.name || `Тариф ${index + 1}`,
+        description: tariff.description,
+        price: tariff.max_amount,
+        priceCurrency: "UAH",
+        availability: "https://schema.org/InStock"
+      })) || []
+    }
+  };
+
+  // LoanOrCredit schema for loan products
+  const loanSchema = {
+    "@context": "https://schema.org",
+    "@type": "LoanOrCredit",
+    name: `Займ в ${data.name}`,
+    description: `Условия получения займа в микрофинансовой организации ${data.name}`,
+    provider: {
+      "@type": "FinancialService",
+      name: data.name
+    },
+    loanTerm: {
+      "@type": "QuantitativeValue",
+      minValue: data.tariffs?.[0]?.min_term || 1,
+      maxValue: data.tariffs?.[0]?.max_term || 30,
+      unitText: "DAY"
+    },
+    loanAmount: {
+      "@type": "MonetaryAmount",
+      minValue: data.tariffs?.[0]?.min_amount || 1000,
+      maxValue: data.tariffs?.[0]?.max_amount || 30000,
+      currency: "UAH"
+    },
+    interestRate: {
+      "@type": "QuantitativeValue",
+      value: data.tariffs?.[0]?.daily_rate || 1,
+      unitText: "PERCENT"
+    }
+  };
+
+  // FAQPage schema if FAQs exist
+  const faqSchema = data.faqs && data.faqs.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: data.faqs.map((faq: any) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer
+      }
+    }))
+  } : null;
+
+  // Combine all schemas
+  const allSchemas: object[] = [
+    webPageSchema,
+    breadcrumbSchema,
+    organizationSchema,
+    loanSchema
+  ];
+
+  // Add FAQ schema if available
+  if (faqSchema) {
+    allSchemas.push(faqSchema);
+  }
+
+  return (
+    <>
+      {allSchemas.map((schema, index) => (
+        <Script
+          key={index}
+          id={`company-schema-${index}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema, null, 2) }}
+        />
+      ))}
+    </>
+  );
+};

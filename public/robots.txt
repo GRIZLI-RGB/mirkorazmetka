@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://mfoxa.com.ua
+
+# Sitemaps
+Sitemap: https://mfoxa.com.ua/sitemap.xml
