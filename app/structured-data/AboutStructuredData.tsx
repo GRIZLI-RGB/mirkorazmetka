@@ -94,7 +94,7 @@ export const AboutStructuredData = ({
       "Кредитование"
     ],
     hasCredential: author.additional_qualification,
-    workExperience: author.work_experience,
+    summary: author.work_experience,
     image: author.avatar,
     worksFor: {
       "@type": "Organization",
