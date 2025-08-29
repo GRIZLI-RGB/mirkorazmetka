@@ -6,6 +6,7 @@ import { PageDatesResponse } from "@/app/services/PageDatesService";
 import { AuthorRandomResponse } from "@/app/services/authorsService";
 import { FaqsResponse } from "@/app/services/FaqService";
 import { SettingsGroupResponse } from "@/app/services/settingsService";
+import { getValidRatingOrCount } from "../lib/utils";
 
 type MfoPageStructuredDataProps = {
 	lang: "ru" | "ua";
@@ -313,10 +314,10 @@ export const MfoPageStructuredData = async ({
 				},
 				aggregateRating: {
 					"@type": "AggregateRating",
-					ratingValue: mfo.rating_average.toString(),
+					ratingValue: getValidRatingOrCount(mfo.rating_average),
 					bestRating: "5",
 					worstRating: "1",
-					ratingCount: (mfo.rating_count || 1).toString(),
+					ratingCount: getValidRatingOrCount(mfo.rating_count, true),
 				},
 			},
 		})),

@@ -1,18 +1,10 @@
 import Script from "next/script";
 import { getHomeData } from "@/app/services/HomeService";
+import { getValidRatingOrCount } from "../lib/utils";
 
 type MicrodataHomeProps = {
 	locale: "ru" | "ua";
 	homeData: Awaited<ReturnType<typeof getHomeData>>;
-};
-
-const getRatingValueOrCount = (
-	ratingAverage: string | number,
-	isCount = false
-): string => {
-	const num = +ratingAverage;
-
-	return num ? String(ratingAverage) : isCount ? "100" : "4.5";
 };
 
 export const MicrodataHome = async ({
@@ -75,9 +67,9 @@ export const MicrodataHome = async ({
 				url: `https://mfoxa.com.ua/${locale}/mfo/${credit.slug}`,
 				aggregateRating: {
 					"@type": "AggregateRating",
-					ratingValue: getRatingValueOrCount(credit.rating_average),
+					ratingValue: getValidRatingOrCount(credit.rating_average),
 					bestRating: "5",
-					ratingCount: getRatingValueOrCount(
+					ratingCount: getValidRatingOrCount(
 						credit.rating_count,
 						true
 					),
@@ -99,9 +91,9 @@ export const MicrodataHome = async ({
 				url: `https://mfoxa.com.ua/${locale}/mfo/${mfo.slug}`,
 				aggregateRating: {
 					"@type": "AggregateRating",
-					ratingValue: getRatingValueOrCount(mfo.rating_average),
+					ratingValue: getValidRatingOrCount(mfo.rating_average),
 					bestRating: "5",
-					ratingCount: getRatingValueOrCount(mfo.rating_count, true),
+					ratingCount: getValidRatingOrCount(mfo.rating_count, true),
 				},
 			},
 		})),
@@ -124,7 +116,7 @@ export const MicrodataHome = async ({
 				reviewBody: review.review_text,
 				reviewRating: {
 					"@type": "Rating",
-					ratingValue: +review.rating || 0,
+					ratingValue: +getValidRatingOrCount(review.rating),
 					bestRating: 5,
 					worstRating: 1,
 				},
@@ -134,7 +126,7 @@ export const MicrodataHome = async ({
 					url: `https://mfoxa.com.ua/${locale}/mfo/${review.mfo.slug}`,
 					aggregateRating: {
 						"@type": "AggregateRating",
-						ratingValue: +review.rating || 0,
+						ratingValue: +getValidRatingOrCount(review.rating),
 						bestRating: 5,
 						ratingCount: 1,
 					},

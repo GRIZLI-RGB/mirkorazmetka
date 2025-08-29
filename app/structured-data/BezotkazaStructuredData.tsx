@@ -5,6 +5,7 @@ import { CatalogPageFull } from "@/app/services/catalogService";
 import { PageDatesResponse } from "@/app/services/PageDatesService";
 import { AuthorRandomResponse } from "@/app/services/authorsService";
 import { SettingsGroupResponse } from "@/app/services/settingsService";
+import { getValidRatingOrCount } from "../lib/utils";
 
 type BezotkazaStructuredDataProps = {
 	lang: "ru" | "ua";
@@ -128,10 +129,10 @@ export const BezotkazaStructuredData = ({
 			if (mfo.rating_count > 0) {
 				baseData.aggregateRating = {
 					"@type": "AggregateRating",
-					ratingValue: mfo.rating_average.toString(),
+					ratingValue: getValidRatingOrCount(mfo.rating_average),
 					bestRating: "5",
 					worstRating: "1",
-					ratingCount: mfo.rating_count.toString(),
+					ratingCount: getValidRatingOrCount(mfo.rating_count, true),
 				};
 			}
 

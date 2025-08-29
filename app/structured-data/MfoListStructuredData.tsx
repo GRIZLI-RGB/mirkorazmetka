@@ -26,9 +26,9 @@ export const MfoListStructuredData: React.FC<Props> = ({ companies }) => {
 				url: company.url,
 				aggregateRating: {
 					"@type": "AggregateRating",
-					ratingValue: String(company.ratingValue || 5),
+					ratingValue: String(+company?.ratingValue || 5),
 					bestRating: "5",
-					ratingCount: String(company.reviewCount || 1),
+					ratingCount: String(+company?.reviewCount || 1),
 				},
 			},
 		})),
