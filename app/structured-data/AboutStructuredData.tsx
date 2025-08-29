@@ -87,14 +87,13 @@ export const AboutStructuredData = ({
     "@type": "Person",
     name: author.name,
     jobTitle: author.role || "Эксперт",
-    description: author.education,
+    description: `${author.education} | ${author.work_experience}`,
     knowsAbout: [
       "Микрофинансирование",
       "Финансовые услуги",
       "Кредитование"
     ],
     hasCredential: author.additional_qualification,
-    summary: author.work_experience,
     image: author.avatar,
     worksFor: {
       "@type": "Organization",
