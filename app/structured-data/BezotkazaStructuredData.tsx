@@ -98,37 +98,45 @@ export const BezotkazaStructuredData = ({
 		description:
 			page.description_under_title ||
 			"Лучшие микрофинансовые организации по проценту одобрения займов",
-		itemListElement: sortedMFOs.map((mfo, index) => ({
-			"@type": "ListItem",
-			position: index + 1,
-			url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/mfo/${
-				mfo.slug
-			}`,
-			name: mfo.name || "Page",
-			item: {
-				"@type": "Organization",
+		itemListElement: sortedMFOs.map((mfo, index) => {
+			const baseData: Record<string, string | number | object> = {
+				"@type": "ListItem",
+				position: index + 1,
+				url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/mfo/${
+					mfo.slug
+				}`,
 				name: mfo.name || "Page",
-				url: mfo.redirect_url || mfo.official_website,
-				logo: mfo.logo_url,
-				description: `Микрофинансовая организация ${mfo.name} с высоким процентом одобрения займов`,
-				address: {
-					"@type": "PostalAddress",
-					addressLocality: mfo.legal_address,
+				item: {
+					"@type": "Organization",
+					name: mfo.name || "Page",
+					url: mfo.redirect_url || mfo.official_website,
+					logo: mfo.logo_url,
+					description: `Микрофинансовая организация ${mfo.name} с высоким процентом одобрения займов`,
+					address: {
+						"@type": "PostalAddress",
+						addressLocality: mfo.legal_address,
+					},
+					contactPoint: {
+						"@type": "ContactPoint",
+						telephone: mfo.phone,
+						email: mfo.email,
+					},
 				},
-				contactPoint: {
-					"@type": "ContactPoint",
-					telephone: mfo.phone,
-					email: mfo.email,
-				},
-			},
-			aggregateRating: {
-				"@type": "AggregateRating",
-				ratingValue: mfo.rating_average.toString(),
-				bestRating: "5",
-				worstRating: "1",
-				ratingCount: mfo.rating_count.toString(),
-			},
-		})),
+			};
+
+			// Добавляем aggregateRating только если есть отзывы
+			if (mfo.rating_count > 0) {
+				baseData.aggregateRating = {
+					"@type": "AggregateRating",
+					ratingValue: mfo.rating_average.toString(),
+					bestRating: "5",
+					worstRating: "1",
+					ratingCount: mfo.rating_count.toString(),
+				};
+			}
+
+			return baseData;
+		}),
 	};
 
 	// FAQPage schema if FAQs exist
