@@ -14,22 +14,6 @@ interface Props {
 }
 
 export const MfoListStructuredData: React.FC<Props> = ({ companies }) => {
-	// const data = {
-	//   "@context": "https://schema.org",
-	//   "@type": "ItemList",
-	//   itemListElement: companies.map((company) => ({
-	//     "@type": "ListItem",
-	//     position: company.position,
-	//     url: company.url,
-	//     name: company.name,
-	//     "aggregateRating": {
-	//       "@type": "AggregateRating",
-	//       ratingValue: company.ratingValue,
-	//       reviewCount: company.reviewCount,
-	//     },
-	//   })),
-	// };
-
 	const data = {
 		"@context": "https://schema.org",
 		"@type": "ItemList",
@@ -42,9 +26,9 @@ export const MfoListStructuredData: React.FC<Props> = ({ companies }) => {
 				url: company.url,
 				aggregateRating: {
 					"@type": "AggregateRating",
-					ratingValue: company.ratingValue || 5,
-					bestRating: 5,
-					ratingCount: company.reviewCount || 1,
+					ratingValue: String(company.ratingValue || 5),
+					bestRating: "5",
+					ratingCount: String(company.reviewCount || 1),
 				},
 			},
 		})),
