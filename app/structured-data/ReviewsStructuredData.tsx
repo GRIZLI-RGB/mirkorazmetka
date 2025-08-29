@@ -131,7 +131,7 @@ export const ReviewsStructuredData = ({
 			worstRating: "1",
 		},
 		itemReviewed: {
-			"@type": "WebPage",
+			"@type": "Organization",
 			name:
 				getAllSettings?.settings.reviews_page_title ||
 				"Отзывы об МФО Украины",
