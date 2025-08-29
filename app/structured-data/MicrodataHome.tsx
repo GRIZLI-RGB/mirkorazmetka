@@ -35,12 +35,12 @@ export const MicrodataHome = async ({
 		description: "Подберите и оформите лучшие займы онлайн в Украине.",
 		datePublished: "2023-01-01",
 		dateModified: homeData.top_mfos[0]?.updated_at || "2025-07-12",
-		aggregateRating: {
-			"@type": "AggregateRating",
-			ratingValue: "4.8",
-			bestRating: "5",
-			ratingCount: "500",
-		},
+		// aggregateRating: {
+		// 	"@type": "AggregateRating",
+		// 	ratingValue: "4.8",
+		// 	bestRating: "5",
+		// 	ratingCount: "500",
+		// },
 	};
 
 	const breadcrumbSchema = {
