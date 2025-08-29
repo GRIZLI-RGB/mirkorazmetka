@@ -90,6 +90,10 @@ export const LoanStructuredData = ({
 					url: `https://mfoxa.com.ua${
 						lang === "ru" ? "/ru" : ""
 					}/loan/${loan.slug}`,
+					address: {
+						"@type": "PostalAddress",
+						addressLocality: "Украина",
+					},
 				},
 				loanType: "Микрозайм",
 				loanTerm: {
