@@ -6,6 +6,15 @@ type MicrodataHomeProps = {
 	homeData: Awaited<ReturnType<typeof getHomeData>>;
 };
 
+const getRatingValueOrCount = (
+	ratingAverage: string | number,
+	isCount = false
+): string => {
+	const num = +ratingAverage;
+
+	return num ? String(ratingAverage) : isCount ? "100" : "4.5";
+};
+
 export const MicrodataHome = async ({
 	locale,
 	homeData,
@@ -66,9 +75,9 @@ export const MicrodataHome = async ({
 				url: `https://mfoxa.com.ua/${locale}/mfo/${credit.slug}`,
 				aggregateRating: {
 					"@type": "AggregateRating",
-					ratingValue: credit.rating_average?.toString() || "4.5",
+					ratingValue: getRatingValueOrCount(credit.rating_average),
 					bestRating: "5",
-					ratingCount: credit.rating_count?.toString() || "100",
+					ratingCount: getRatingValueOrCount(credit.rating_count),
 				},
 			},
 		})),
@@ -87,9 +96,9 @@ export const MicrodataHome = async ({
 				url: `https://mfoxa.com.ua/${locale}/mfo/${mfo.slug}`,
 				aggregateRating: {
 					"@type": "AggregateRating",
-					ratingValue: mfo.rating_average?.toString() || "4.5",
+					ratingValue: getRatingValueOrCount(mfo.rating_average),
 					bestRating: "5",
-					ratingCount: mfo.rating_count?.toString() || "100",
+					ratingCount: getRatingValueOrCount(mfo.rating_count),
 				},
 			},
 		})),
@@ -112,7 +121,7 @@ export const MicrodataHome = async ({
 				reviewBody: review.review_text,
 				reviewRating: {
 					"@type": "Rating",
-					ratingValue: review.rating || 0,
+					ratingValue: +review.rating || 0,
 					bestRating: 5,
 					worstRating: 1,
 				},
