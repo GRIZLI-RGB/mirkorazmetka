@@ -77,7 +77,10 @@ export const MicrodataHome = async ({
 					"@type": "AggregateRating",
 					ratingValue: getRatingValueOrCount(credit.rating_average),
 					bestRating: "5",
-					ratingCount: getRatingValueOrCount(credit.rating_count),
+					ratingCount: getRatingValueOrCount(
+						credit.rating_count,
+						true
+					),
 				},
 			},
 		})),
@@ -98,7 +101,7 @@ export const MicrodataHome = async ({
 					"@type": "AggregateRating",
 					ratingValue: getRatingValueOrCount(mfo.rating_average),
 					bestRating: "5",
-					ratingCount: getRatingValueOrCount(mfo.rating_count),
+					ratingCount: getRatingValueOrCount(mfo.rating_count, true),
 				},
 			},
 		})),
@@ -129,6 +132,12 @@ export const MicrodataHome = async ({
 					"@type": "Organization",
 					name: review.mfo.name,
 					url: `https://mfoxa.com.ua/${locale}/mfo/${review.mfo.slug}`,
+					aggregateRating: {
+						"@type": "AggregateRating",
+						ratingValue: +review.rating || 0,
+						bestRating: 5,
+						ratingCount: 1,
+					},
 				},
 			},
 		})),
