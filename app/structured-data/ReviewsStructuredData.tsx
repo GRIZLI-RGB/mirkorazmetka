@@ -149,7 +149,7 @@ export const ReviewsStructuredData = ({
 		"@context": "https://schema.org",
 		"@type": "AggregateRating",
 		itemReviewed: {
-			"@type": "WebPage",
+			"@type": "Organization",
 			name: "Отзывы об МФО Украины",
 			url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/reviews`,
 		},
