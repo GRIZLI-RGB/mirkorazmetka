@@ -111,13 +111,15 @@ export const MfoPageStructuredData = async ({
 			url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/mfo/${
 				mfo.slug
 			}`,
-			name: mfo.name || "Page",
+			name: `${mfo.name || "Page"} (${index + 1})`,
 			item: {
 				"@type": "Organization",
 				// name: mfo.name || "Page",
 				// url: mfo.redirect_url || mfo.official_website,
 				name: `${mfo.name || "Page"} (${index + 1})`,
-				url: `https://mfoxa.com.ua/ru/mfo/${mfo.slug}`,
+				url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/mfo/${
+					mfo.slug
+				}`,
 				logo: mfo.logo_url,
 				// address: {
 				// 	"@type": "PostalAddress",
