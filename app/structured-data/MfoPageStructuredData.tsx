@@ -114,18 +114,20 @@ export const MfoPageStructuredData = async ({
 			name: mfo.name || "Page",
 			item: {
 				"@type": "Organization",
-				name: mfo.name || "Page",
-				url: mfo.redirect_url || mfo.official_website,
+				// name: mfo.name || "Page",
+				// url: mfo.redirect_url || mfo.official_website,
+				name: `${mfo.name || "Page"} (${index + 1})`,
+				url: `https://mfoxa.com.ua/ru/mfo/${mfo.slug}`,
 				logo: mfo.logo_url,
-				address: {
-					"@type": "PostalAddress",
-					addressLocality: mfo.legal_address,
-				},
-				contactPoint: {
-					"@type": "ContactPoint",
-					telephone: mfo.phone,
-					email: mfo.email,
-				},
+				// address: {
+				// 	"@type": "PostalAddress",
+				// 	addressLocality: mfo.legal_address,
+				// },
+				// contactPoint: {
+				// 	"@type": "ContactPoint",
+				// 	telephone: mfo.phone,
+				// 	email: mfo.email,
+				// },
 				aggregateRating: {
 					"@type": "AggregateRating",
 					ratingValue: getValidRatingOrCount(mfo.rating_average),
