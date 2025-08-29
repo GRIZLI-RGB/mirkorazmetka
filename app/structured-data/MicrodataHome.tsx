@@ -24,7 +24,7 @@ export const MicrodataHome = async ({
 		"@type": "WebSite",
 		name: "MFoxa",
 		url: "https://mfoxa.com.ua",
-		logo: "https://mfoxa.com.ua/logo.png",
+		// logo: "https://mfoxa.com.ua/logo.png",
 	};
 
 	const webPageSchema = {
