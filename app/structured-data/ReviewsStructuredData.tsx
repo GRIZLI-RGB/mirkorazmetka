@@ -135,8 +135,8 @@ export const ReviewsStructuredData = ({
       "@type": "WebPage",
       name: "Отзывы об МФО Украины"
     },
-    ratingCount: stats.total_reviews,
-    reviewCount: stats.total_reviews,
+    ratingCount: String(+stats.total_reviews || 1),
+    reviewCount: String(+stats.total_reviews || 1),
     bestRating: "5",
     worstRating: "1"
   };
