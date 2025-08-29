@@ -108,10 +108,10 @@ export const MfoPageStructuredData = async ({
 		itemListElement: uniqueMFOs.map((mfo, index) => ({
 			"@type": "ListItem",
 			position: index + 1,
-			url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/mfo/${
-				mfo.slug
-			}`,
-			name: `${mfo.name || "Page"} (${index + 1})`,
+			// url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/mfo/${
+			// 	mfo.slug
+			// }`,
+			// name: `${mfo.name || "Page"} (${index + 1})`,
 			item: {
 				"@type": "Organization",
 				// name: mfo.name || "Page",

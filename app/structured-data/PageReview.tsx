@@ -28,8 +28,9 @@ export const PageReview = ({
 			worstRating: "1",
 		},
 		itemReviewed: {
-			"@type": "WebPage",
-			name: pageName,
+			"@type": "Organization",
+			name: "MFoxa",
+			url: "https://mfoxa.com.ua",
 		},
 		reviewBody: `Отзыв о странице ${pageName} от эксперта ${
 			author?.data?.name || "MFoxa"
