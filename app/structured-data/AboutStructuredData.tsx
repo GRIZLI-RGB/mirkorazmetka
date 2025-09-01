@@ -39,24 +39,24 @@ export const AboutStructuredData = ({
 	};
 
 	// BreadcrumbList schema
-	const breadcrumbSchema = {
-		"@context": "https://schema.org",
-		"@type": "BreadcrumbList",
-		itemListElement: [
-			{
-				"@type": "ListItem",
-				position: 1,
-				name: "Главная",
-				item: "https://mfoxa.com.ua",
-			},
-			{
-				"@type": "ListItem",
-				position: 2,
-				name: lang === "ru" ? "О нас" : "Про нас",
-				item: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/about`,
-			},
-		],
-	};
+	// const breadcrumbSchema = {
+	// 	"@context": "https://schema.org",
+	// 	"@type": "BreadcrumbList",
+	// 	itemListElement: [
+	// 		{
+	// 			"@type": "ListItem",
+	// 			position: 1,
+	// 			name: "Главная",
+	// 			item: "https://mfoxa.com.ua",
+	// 		},
+	// 		{
+	// 			"@type": "ListItem",
+	// 			position: 2,
+	// 			name: lang === "ru" ? "О нас" : "Про нас",
+	// 			item: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/about`,
+	// 		},
+	// 	],
+	// };
 
 	// Organization schema for MFoxa
 	const organizationSchema = {
@@ -120,7 +120,7 @@ export const AboutStructuredData = ({
 	// Combine all schemas
 	const allSchemas = [
 		webPageSchema,
-		breadcrumbSchema,
+		// breadcrumbSchema,
 		organizationSchema,
 		...personSchemas,
 	];

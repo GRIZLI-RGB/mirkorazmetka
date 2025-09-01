@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useMemo } from "react";
-// import { BreadcrumbList } from "../structured-data/BreadcrumbList";
+import { BreadcrumbList } from "../structured-data/BreadcrumbList";
 
 type BreadProps = {
 	lang: "ru" | "ua";
@@ -52,7 +52,7 @@ const Bread = ({ lang }: BreadProps) => {
 
 	return (
 		<>
-			{/* <BreadcrumbList lang={lang} /> */}
+			<BreadcrumbList lang={lang} />
 			<div
 				className="p-[10px] md:pl-[20px] my-[10px] flex gap-[9px] text-[#222] text-[12px] font-medium leading-[142%]"
 				style={{ fontFamily: "var(--Montserrat)" }}
