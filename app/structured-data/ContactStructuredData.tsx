@@ -25,33 +25,12 @@ export const ContactStructuredData = ({
 		url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/contacts`,
 		datePublished: dates.date_published,
 		dateModified: dates.date_modified,
+		image: "https://mfoxa.com.ua/logo.png",
 		publisher: {
 			"@type": "Organization",
 			name: "MFoxa",
 			url: "https://mfoxa.com.ua",
 		},
-	};
-
-	// BreadcrumbList schema
-	const breadcrumbSchema = {
-		"@context": "https://schema.org",
-		"@type": "BreadcrumbList",
-		itemListElement: [
-			{
-				"@type": "ListItem",
-				position: 1,
-				name: "Главная",
-				item: "https://mfoxa.com.ua",
-			},
-			{
-				"@type": "ListItem",
-				position: 2,
-				name: lang === "ru" ? "Контакты" : "Контакти",
-				item: `https://mfoxa.com.ua${
-					lang === "ru" ? "/ru" : ""
-				}/contacts`,
-			},
-		],
 	};
 
 	// Organization schema for MFoxa
@@ -132,12 +111,7 @@ export const ContactStructuredData = ({
 	};
 
 	// Combine all schemas
-	const allSchemas = [
-		webPageSchema,
-		breadcrumbSchema,
-		organizationSchema,
-		localBusinessSchema,
-	];
+	const allSchemas = [webPageSchema, organizationSchema, localBusinessSchema];
 
 	return (
 		<>
