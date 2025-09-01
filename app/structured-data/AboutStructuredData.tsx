@@ -73,7 +73,11 @@ export const AboutStructuredData = ({
 			addressLocality: "Харьков",
 			postalCode: "61174",
 		},
-		hasCredential: "Лицензия НБУ",
+		hasCredential: {
+			"@type": "EducationalOccupationalCredential",
+			credentialCategory: "License",
+			name: "Лицензия НБУ",
+		},
 		foundingDate: "2020",
 		employee: authors.map((author) => ({
 			"@type": "Person",
@@ -100,7 +104,11 @@ export const AboutStructuredData = ({
 			"Финансовые услуги",
 			"Кредитование",
 		],
-		hasCredential: author.additional_qualification,
+    hasCredential: {
+			"@type": "EducationalOccupationalCredential",
+			credentialCategory: "License",
+			name: author.additional_qualification || "Лицензия НБУ",
+		},
 		image: author.avatar,
 		worksFor: {
 			"@type": "Organization",
