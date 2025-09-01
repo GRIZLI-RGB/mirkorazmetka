@@ -25,7 +25,6 @@ export const ContactStructuredData = ({
 		url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/contacts`,
 		datePublished: dates.date_published,
 		dateModified: dates.date_modified,
-		image: "https://mfoxa.com.ua/logo.png",
 		publisher: {
 			"@type": "Organization",
 			name: "MFoxa",
@@ -93,6 +92,7 @@ export const ContactStructuredData = ({
 		url: "https://mfoxa.com.ua",
 		telephone: "+38 (093) 000-00-00",
 		email: "admin@mfoxa.com.ua",
+		image: "https://mfoxa.com.ua/logo.png",
 		address: {
 			"@type": "PostalAddress",
 			streetAddress: "Архитекторів 32",
