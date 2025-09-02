@@ -16,7 +16,6 @@ export const MicrodataHome = async ({
 		"@type": "WebSite",
 		name: "MFoxa",
 		url: "https://mfoxa.com.ua",
-		// logo: "https://mfoxa.com.ua/logo.png",
 	};
 
 	const webPageSchema = {
@@ -26,13 +25,7 @@ export const MicrodataHome = async ({
 		url: `https://mfoxa.com.ua/${locale}`,
 		description: "Подберите и оформите лучшие займы онлайн в Украине.",
 		datePublished: "2023-01-01",
-		dateModified: homeData.top_mfos[0]?.updated_at || "2025-07-12",
-		// aggregateRating: {
-		// 	"@type": "AggregateRating",
-		// 	ratingValue: "4.8",
-		// 	bestRating: "5",
-		// 	ratingCount: "500",
-		// },
+		dateModified: new Date().toISOString().split("T")[0],
 	};
 
 	const breadcrumbSchema = {
@@ -44,13 +37,7 @@ export const MicrodataHome = async ({
 				position: 1,
 				name: "Главная",
 				item: "https://mfoxa.com.ua/",
-			},
-			{
-				"@type": "ListItem",
-				position: 2,
-				name: "Рейтинг МФО",
-				item: `https://mfoxa.com.ua/${locale}/mfo`,
-			},
+			}
 		],
 	};
 
