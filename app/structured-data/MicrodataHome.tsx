@@ -35,9 +35,9 @@ export const MicrodataHome = async ({
 			{
 				"@type": "ListItem",
 				position: 1,
-				name: "Главная",
-				item: "https://mfoxa.com.ua/",
-			}
+				name: locale === "ua" ? "Головна" : "Главная",
+				item: `https://mfoxa.com.ua${locale === "ru" ? "/ru" : ""}`,
+			},
 		],
 	};
 
