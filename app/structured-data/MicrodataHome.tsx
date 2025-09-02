@@ -1,6 +1,6 @@
 import Script from "next/script";
 import { getHomeData } from "@/app/services/HomeService";
-import { getValidRatingOrCount } from "../lib/utils";
+// import { getValidRatingOrCount } from "../lib/utils";
 
 type MicrodataHomeProps = {
 	locale: "ru" | "ua";
@@ -9,7 +9,7 @@ type MicrodataHomeProps = {
 
 export const MicrodataHome = async ({
 	locale,
-	homeData,
+	// homeData,
 }: MicrodataHomeProps) => {
 	const webSiteSchema = {
 		"@context": "https://schema.org",
@@ -41,125 +41,125 @@ export const MicrodataHome = async ({
 		],
 	};
 
-	const bestLoansSchema = {
-		"@context": "https://schema.org",
-		"@type": "ItemList",
-		name: "Лучшие кредиты",
-		itemListElement: homeData.best_credits.map((credit, index) => ({
-			"@type": "ListItem",
-			position: index + 1,
-			item: {
-				"@type": "Organization",
-				name: credit.name,
-				url: `https://mfoxa.com.ua/${locale}/mfo/${credit.slug}`,
-				aggregateRating: {
-					"@type": "AggregateRating",
-					ratingValue: getValidRatingOrCount(credit.rating_average),
-					bestRating: "5",
-					ratingCount: getValidRatingOrCount(
-						credit.rating_count,
-						true
-					),
-				},
-			},
-		})),
-	};
+	// const bestLoansSchema = {
+	// 	"@context": "https://schema.org",
+	// 	"@type": "ItemList",
+	// 	name: "Лучшие кредиты",
+	// 	itemListElement: homeData.best_credits.map((credit, index) => ({
+	// 		"@type": "ListItem",
+	// 		position: index + 1,
+	// 		item: {
+	// 			"@type": "Organization",
+	// 			name: credit.name,
+	// 			url: `https://mfoxa.com.ua/${locale}/mfo/${credit.slug}`,
+	// 			aggregateRating: {
+	// 				"@type": "AggregateRating",
+	// 				ratingValue: getValidRatingOrCount(credit.rating_average),
+	// 				bestRating: "5",
+	// 				ratingCount: getValidRatingOrCount(
+	// 					credit.rating_count,
+	// 					true
+	// 				),
+	// 			},
+	// 		},
+	// 	})),
+	// };
 
-	const topMfoSchema = {
-		"@context": "https://schema.org",
-		"@type": "ItemList",
-		name: "Топ МФО Украины",
-		itemListElement: homeData.top_mfos.map((mfo, index) => ({
-			"@type": "ListItem",
-			position: index + 1,
-			item: {
-				"@type": "Organization",
-				name: mfo.name || "Page",
-				url: `https://mfoxa.com.ua/${locale}/mfo/${mfo.slug}`,
-				aggregateRating: {
-					"@type": "AggregateRating",
-					ratingValue: getValidRatingOrCount(mfo.rating_average),
-					bestRating: "5",
-					ratingCount: getValidRatingOrCount(mfo.rating_count, true),
-				},
-			},
-		})),
-	};
+	// const topMfoSchema = {
+	// 	"@context": "https://schema.org",
+	// 	"@type": "ItemList",
+	// 	name: "Топ МФО Украины",
+	// 	itemListElement: homeData.top_mfos.map((mfo, index) => ({
+	// 		"@type": "ListItem",
+	// 		position: index + 1,
+	// 		item: {
+	// 			"@type": "Organization",
+	// 			name: mfo.name || "Page",
+	// 			url: `https://mfoxa.com.ua/${locale}/mfo/${mfo.slug}`,
+	// 			aggregateRating: {
+	// 				"@type": "AggregateRating",
+	// 				ratingValue: getValidRatingOrCount(mfo.rating_average),
+	// 				bestRating: "5",
+	// 				ratingCount: getValidRatingOrCount(mfo.rating_count, true),
+	// 			},
+	// 		},
+	// 	})),
+	// };
 
-	const reviewsSchema = {
-		"@context": "https://schema.org",
-		"@type": "ItemList",
-		name: "Последние отзывы",
-		itemListElement: homeData.recent_reviews.map((review, index) => ({
-			"@type": "ListItem",
-			position: index + 1,
-			item: {
-				"@type": "Review",
-				author: {
-					"@type": "Person",
-					name: review.author_name || "Аноним",
-				},
-				datePublished: review.created_at,
-				reviewBody: review.review_text,
-				reviewRating: {
-					"@type": "Rating",
-					ratingValue: +getValidRatingOrCount(review.rating),
-					bestRating: 5,
-					worstRating: 1,
-				},
-				itemReviewed: {
-					"@type": "Organization",
-					name: review.mfo.name,
-					url: `https://mfoxa.com.ua/${locale}/mfo/${review.mfo.slug}`,
-					aggregateRating: {
-						"@type": "AggregateRating",
-						ratingValue: +getValidRatingOrCount(review.rating),
-						bestRating: 5,
-						ratingCount: 1,
-					},
-				},
-			},
-		})),
-	};
+	// const reviewsSchema = {
+	// 	"@context": "https://schema.org",
+	// 	"@type": "ItemList",
+	// 	name: "Последние отзывы",
+	// 	itemListElement: homeData.recent_reviews.map((review, index) => ({
+	// 		"@type": "ListItem",
+	// 		position: index + 1,
+	// 		item: {
+	// 			"@type": "Review",
+	// 			author: {
+	// 				"@type": "Person",
+	// 				name: review.author_name || "Аноним",
+	// 			},
+	// 			datePublished: review.created_at,
+	// 			reviewBody: review.review_text,
+	// 			reviewRating: {
+	// 				"@type": "Rating",
+	// 				ratingValue: +getValidRatingOrCount(review.rating),
+	// 				bestRating: 5,
+	// 				worstRating: 1,
+	// 			},
+	// 			itemReviewed: {
+	// 				"@type": "Organization",
+	// 				name: review.mfo.name,
+	// 				url: `https://mfoxa.com.ua/${locale}/mfo/${review.mfo.slug}`,
+	// 				aggregateRating: {
+	// 					"@type": "AggregateRating",
+	// 					ratingValue: +getValidRatingOrCount(review.rating),
+	// 					bestRating: 5,
+	// 					ratingCount: 1,
+	// 				},
+	// 			},
+	// 		},
+	// 	})),
+	// };
 
-	const faqSchema = {
-		"@context": "https://schema.org",
-		"@type": "FAQPage",
-		mainEntity: [
-			{
-				"@type": "Question",
-				name: "Как выбрать надежную МФО?",
-				acceptedAnswer: {
-					"@type": "Answer",
-					text: "Выбирайте МФО с высоким рейтингом, положительными отзывами и прозрачными условиями. Обратите внимание на лицензию НБУ и условия кредитования.",
-				},
-			},
-			{
-				"@type": "Question",
-				name: "Какие документы нужны для оформления займа?",
-				acceptedAnswer: {
-					"@type": "Answer",
-					text: "Обычно требуется паспорт, ИНН и банковская карта. Некоторые МФО могут запрашивать дополнительные данные.",
-				},
-			},
-			{
-				"@type": "Question",
-				name: "Как быстро можно получить деньги?",
-				acceptedAnswer: {
-					"@type": "Answer",
-					text: "Большинство МФО переводят деньги на карту в течение 5-30 минут после одобрения заявки.",
-				},
-			},
-			{
-				"@type": "Question",
-				name: "Можно ли взять займ с плохой кредитной историей?",
-				acceptedAnswer: {
-					"@type": "Answer",
-					text: "Да, многие МФО предлагают займы клиентам с плохой кредитной историей, но условия могут быть менее выгодными.",
-				},
-			},
-		],
-	};
+	// const faqSchema = {
+	// 	"@context": "https://schema.org",
+	// 	"@type": "FAQPage",
+	// 	mainEntity: [
+	// 		{
+	// 			"@type": "Question",
+	// 			name: "Как выбрать надежную МФО?",
+	// 			acceptedAnswer: {
+	// 				"@type": "Answer",
+	// 				text: "Выбирайте МФО с высоким рейтингом, положительными отзывами и прозрачными условиями. Обратите внимание на лицензию НБУ и условия кредитования.",
+	// 			},
+	// 		},
+	// 		{
+	// 			"@type": "Question",
+	// 			name: "Какие документы нужны для оформления займа?",
+	// 			acceptedAnswer: {
+	// 				"@type": "Answer",
+	// 				text: "Обычно требуется паспорт, ИНН и банковская карта. Некоторые МФО могут запрашивать дополнительные данные.",
+	// 			},
+	// 		},
+	// 		{
+	// 			"@type": "Question",
+	// 			name: "Как быстро можно получить деньги?",
+	// 			acceptedAnswer: {
+	// 				"@type": "Answer",
+	// 				text: "Большинство МФО переводят деньги на карту в течение 5-30 минут после одобрения заявки.",
+	// 			},
+	// 		},
+	// 		{
+	// 			"@type": "Question",
+	// 			name: "Можно ли взять займ с плохой кредитной историей?",
+	// 			acceptedAnswer: {
+	// 				"@type": "Answer",
+	// 				text: "Да, многие МФО предлагают займы клиентам с плохой кредитной историей, но условия могут быть менее выгодными.",
+	// 			},
+	// 		},
+	// 	],
+	// };
 
 	return (
 		<>
@@ -172,7 +172,7 @@ export const MicrodataHome = async ({
 			<Script id="breadcrumb-schema" type="application/ld+json">
 				{JSON.stringify(breadcrumbSchema, null, 2)}
 			</Script>
-			<Script id="best-loans-schema" type="application/ld+json">
+			{/* <Script id="best-loans-schema" type="application/ld+json">
 				{JSON.stringify(bestLoansSchema, null, 2)}
 			</Script>
 			<Script id="top-mfo-schema" type="application/ld+json">
@@ -183,7 +183,7 @@ export const MicrodataHome = async ({
 			</Script>
 			<Script id="faq-schema" type="application/ld+json">
 				{JSON.stringify(faqSchema, null, 2)}
-			</Script>
+			</Script> */}
 		</>
 	);
 };
