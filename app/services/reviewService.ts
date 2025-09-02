@@ -97,21 +97,6 @@ export const getReviewStatistics =
     }
   };
 
-// export const getReviews = async (
-//   params: GetReviewsParams = {}
-// ): Promise<ReviewsApiResponse> => {
-//   try {
-//     const response = await axios.get<ReviewsApiResponse>(
-//       "https://mfo.webalchemy.fun/api/v1/reviews",
-//       { params }
-//     );
-//     return response.data;
-//   } catch (error) {
-//     console.error("getReviews error:", error);
-//     throw new Error("Failed to fetch reviews");
-//   }
-// };
-
 export const getReviews = async (
   params: GetReviewsParams = {}
 ): Promise<ReviewsApiResponse> => {
