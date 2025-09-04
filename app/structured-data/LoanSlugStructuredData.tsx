@@ -101,7 +101,7 @@ export const LoanSlugStructuredData: React.FC<LoanSlugStructuredDataProps> = ({
 				},
 				address: emptyAddress,
 				priceRange: "$$",
-				image: loan.logo_url || undefined,
+				image: loan?.logo_url || "https://mfoxa.com.ua/logo.png",
 				telephone: "-",
 			},
 		})),
