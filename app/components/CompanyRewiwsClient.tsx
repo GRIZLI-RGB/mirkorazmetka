@@ -346,120 +346,7 @@ export default function CompanyRewiwsClient({
 								onClose={closeAnswerModal}
 								type="review"
 							/>
-							<div
-								className=" border-[1px] border-[#d6d6f9] p-[10px] md:p-[30px] bg-white rounded-lg mt-[10px]"
-								itemScope
-								itemType="https://schema.org/Review"
-							>
-								<meta
-									itemProp="datePublished"
-									content={review.created_at}
-								/>
-								<div
-									itemProp="author"
-									itemScope
-									itemType="https://schema.org/Person"
-								>
-									<meta
-										itemProp="name"
-										content={review.author_name || "Аноним"}
-									/>
-								</div>
-								<div
-									itemProp="reviewRating"
-									itemScope
-									itemType="https://schema.org/Rating"
-								>
-									<meta
-										itemProp="ratingValue"
-										content={String(review.rating || 0)}
-									/>
-									<meta itemProp="bestRating" content="5" />
-									<meta itemProp="worstRating" content="1" />
-								</div>
-								{/* <div
-									itemProp="itemReviewed"
-									itemScope
-									itemType="https://schema.org/FinancialService"
-								>
-									<meta
-										itemProp="name"
-										content={getCompanyName()}
-									/>
-									<meta
-										itemProp="url"
-										content={`https://mfoxa.com.ua${
-											lang === "ru" ? "/ru" : ""
-										}/mfo/${slug}`}
-									/>
-								</div> */}
-								<div
-									itemProp="itemReviewed"
-									itemScope
-									itemType="https://schema.org/FinancialService"
-								>
-									<meta
-										itemProp="name"
-										content={getCompanyName()}
-									/>
-									<meta
-										itemProp="url"
-										content={`https://mfoxa.com.ua${
-											lang === "ru" ? "/ru" : ""
-										}/mfo/${slug}`}
-									/>
-									<div
-										itemProp="address"
-										itemScope
-										itemType="https://schema.org/PostalAddress"
-									>
-										<meta
-											itemProp="streetAddress"
-											content="ул. Примерная, 12"
-										/>
-										<meta
-											itemProp="addressLocality"
-											content="Киев"
-										/>
-										<meta
-											itemProp="addressRegion"
-											content="Киевская область"
-										/>
-										<meta
-											itemProp="postalCode"
-											content="01001"
-										/>
-										<meta
-											itemProp="addressCountry"
-											content="UA"
-										/>
-									</div>
-								</div>
-								{review.admin_response && (
-									<div
-										itemProp="comment"
-										itemScope
-										itemType="https://schema.org/Comment"
-									>
-										<meta
-											itemProp="text"
-											content={review.admin_response}
-										/>
-										<div
-											itemProp="author"
-											itemScope
-											itemType="https://schema.org/Organization"
-										>
-											<meta
-												itemProp="name"
-												content={
-													review.admin_response_author ||
-													getCompanyName()
-												}
-											/>
-										</div>
-									</div>
-								)}
+							<div className="border-[1px] border-[#d6d6f9] p-[10px] md:p-[30px] bg-white rounded-lg mt-[10px]">
 								<div className="flex gap-[10px] mb-[14px]">
 									<Image
 										src={review.mfo?.logo_url}
@@ -474,7 +361,6 @@ export default function CompanyRewiwsClient({
 											style={{
 												fontFamily: "var(--Montserrat)",
 											}}
-											itemProp="author"
 										>
 											{review.author_name ||
 												t(`reviews.${i}.user`)}
@@ -506,7 +392,6 @@ export default function CompanyRewiwsClient({
 										lineHeight: "138%",
 										color: "#222",
 									}}
-									itemProp="reviewBody"
 								>
 									{review.review_text}
 								</p>
