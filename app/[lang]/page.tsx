@@ -8,7 +8,6 @@ import DetailsText from "../components/DetailsText";
 import Questions from "../components/Home/Questions";
 import { getTranslations } from "next-intl/server";
 import { getHomeData, LangType } from "../services/HomeService";
-import { MicrodataHome } from "../structured-data/MicrodataHome";
 import settingsService from "../services/settingsService";
 
 export async function generateMetadata({
@@ -75,19 +74,16 @@ export default async function Home({
 		console.error("Ошибка при получении настроек:", error);
 	}
 	return (
-		<>
-			<MicrodataHome locale={lang as "ru" | "ua"} homeData={homeData} />
-			<div>
-				<FinancialMarketplace
-					locale={lang}
-					settings={getAllSettings?.settings}
-				/>
-				<BestLoans best_credits={homeData.best_credits} />
-				<TopUkrMFO top_mfos={homeData.top_mfos} />
-				<LastReviews recent_reviews={homeData.recent_reviews} />
-				<DetailsText html={getAllSettings?.settings.main_page_text} />
-				<Questions />
-			</div>
-		</>
+		<div>
+			<FinancialMarketplace
+				locale={lang}
+				settings={getAllSettings?.settings}
+			/>
+			<BestLoans best_credits={homeData.best_credits} />
+			<TopUkrMFO top_mfos={homeData.top_mfos} />
+			<LastReviews recent_reviews={homeData.recent_reviews} />
+			<DetailsText html={getAllSettings?.settings.main_page_text} />
+			<Questions />
+		</div>
 	);
 }

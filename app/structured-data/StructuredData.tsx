@@ -1,25 +1,80 @@
 "use client";
 
-import React from "react";
+import { usePathname } from "next/navigation";
 
-export const StructuredData = () => {
-	const org = {
+import { LangType } from "../services/HomeService";
+
+export default function StructuredData({ lang }: { lang: LangType }) {
+	const pathname = usePathname();
+
+	const addressByLang = {
+		ru: {
+			addressRegion: "Харьковская обл.",
+			streetAddress: "Архитекторов 32",
+			addressLocality: "Харьков",
+		},
+		ua: {
+			addressRegion: "Харківська обл.",
+			streetAddress: "Архітекторів 32",
+			addressLocality: "Харків",
+		},
+	};
+
+	// 1. Organization
+	const organization = {
 		"@context": "https://schema.org",
 		"@type": "Organization",
 		name: "MFoxa",
 		url: "https://mfoxa.com.ua",
+		description: {
+			ru: "Маркетплейс микрофинансовых организаций Украины",
+			ua: "Маркетплейс мікрофінансових організацій України",
+		}[lang],
 		logo: "https://mfoxa.com.ua/logo.png",
-		sameAs: [
-			"https://www.facebook.com/yourcompany",
-			"https://www.instagram.com/yourcompany",
-		]
+		foundingDate: "2013",
+		address: {
+			"@type": "PostalAddress",
+			addressCountry: "UA",
+			postalCode: "61174",
+			...addressByLang[lang],
+		},
+		contactPoint: [
+			{
+				"@type": "ContactPoint",
+				telephone: "+380930000000",
+				email: "admin@mfoxa.com.ua",
+				contactType: "customer support",
+				areaServed: "UA",
+				availableLanguage: ["Russian", "Ukrainian"],
+			},
+		],
+		hasCredential: {
+			"@type": "EducationalOccupationalCredential",
+			credentialCategory: "License",
+			name: "Лицензия НБУ",
+		},
 	};
 
+	// 2. WebSite
 	const website = {
 		"@context": "https://schema.org",
 		"@type": "WebSite",
 		name: "MFoxa",
 		url: "https://mfoxa.com.ua",
+		description:
+			lang === "ua"
+				? "Фінансовий маркетплейс для порівняння МФО в Україні."
+				: "Финансовый маркетплейс для сравнения МФО в Украине.",
+
+		inLanguage: ["ru", "uk"],
+		publisher: {
+			"@type": "Organization",
+			name: "MFoxa",
+			logo: {
+				"@type": "ImageObject",
+				url: "https://mfoxa.com.ua/logo.png",
+			},
+		},
 		potentialAction: {
 			"@type": "SearchAction",
 			target: "https://mfoxa.com.ua/search?q={search_term_string}",
@@ -27,16 +82,44 @@ export const StructuredData = () => {
 		},
 	};
 
+	// 3. BreadcrumbList (строим по pathname)
+	const segments = pathname.split("/").filter(Boolean);
+	const filteredSegments = segments.filter(
+		(seg) => seg !== "ru" && seg !== "ua"
+	);
+
+	const breadcrumbs = {
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		itemListElement: [
+			{
+				"@type": "ListItem",
+				position: 1,
+				name: lang === "ua" ? "Головна" : "Главная",
+				item: "https://mfoxa.com.ua",
+			},
+			...filteredSegments.map((seg, idx) => ({
+				"@type": "ListItem",
+				position: idx + 2,
+				name: decodeURIComponent(seg), // TODO: лучше заменить на словарь slug → title
+				item: `https://mfoxa.com.ua/${filteredSegments
+					.slice(0, idx + 1)
+					.join("/")}`,
+			})),
+		],
+	};
+
+	const schemas = [organization, website, breadcrumbs];
+
 	return (
 		<>
-			<script
-				type="application/ld+json"
-				dangerouslySetInnerHTML={{ __html: JSON.stringify(org) }}
-			/>
-			<script
-				type="application/ld+json"
-				dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }}
-			/>
+			{schemas.map((schema, i) => (
+				<script
+					key={i}
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+				/>
+			))}
 		</>
 	);
-};
+}
