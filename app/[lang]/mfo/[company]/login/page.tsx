@@ -7,78 +7,84 @@ import { getMfoDetails } from "@/app/services/getMfoDetailsService";
 import { MicrodataLogin } from "@/app/structured-data/MicrodataLogin";
 
 interface Props {
-  params: Promise<{ lang: string; company: string }>;
+	params: Promise<{ lang: string; company: string }>;
 }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { lang, company } = await params;
-  const slug = decodeURIComponent(company || "sgroshi");
+	const { lang, company } = await params;
+	const slug = decodeURIComponent(company || "sgroshi");
 
-  // Получаем данные из API
-  const { data } = await getMfoDetails(slug, lang === "ua" ? "uk" : "ru");
+	const { data } = await getMfoDetails(slug, lang === "ua" ? "uk" : "ru");
 
-  const loginPage = data.login_page;
+	const loginPage = data.login_page;
 
-  return {
-    title: loginPage?.meta_title || `Личный кабинет ${data.name}`,
-    description:
-      loginPage?.meta_description ||
-      `Информация о входе в личный кабинет ${data.name}`,
-    openGraph: {
-      title: loginPage?.meta_title,
-      description: loginPage?.meta_description,
-      url: `https://mfoxa.com.ua${lang === 'ru' ? '/ru' : ''}/mfo/${slug}/login`,
-      type: "website",
-      siteName: "MFoxa",
-    },
-    keywords: [
-      lang === "uk" ? "особистий кабінет" : "личный кабинет",
-      data.name,
-      lang === "uk" ? "вхід" : "вход",
-      lang === "uk" ? "реєстрація" : "регистрация",
-      lang === "uk" ? "сервіс" : "сервис",
-    ],
-    robots: { index: true, follow: true },
-  };
+	return {
+		title: loginPage?.meta_title || `Личный кабинет ${data.name}`,
+		description:
+			loginPage?.meta_description ||
+			`Информация о входе в личный кабинет ${data.name}`,
+		openGraph: {
+			title: loginPage?.meta_title,
+			description: loginPage?.meta_description,
+			url: `https://mfoxa.com.ua${
+				lang === "ru" ? "/ru" : ""
+			}/mfo/${slug}/login`,
+			type: "website",
+			siteName: "MFoxa",
+		},
+		keywords: [
+			lang === "uk" ? "особистий кабінет" : "личный кабинет",
+			data.name,
+			lang === "uk" ? "вхід" : "вход",
+			lang === "uk" ? "реєстрація" : "регистрация",
+			lang === "uk" ? "сервіс" : "сервис",
+		],
+		robots: { index: true, follow: true },
+	};
 }
 
 const Login: NextPage<Props> = async ({ params }) => {
-  const { lang, company } = await params;
-  const companySlug = decodeURIComponent(company || "sgroshi");
-  const t = await getTranslations({ locale: lang, namespace: "Login" });
+	const { lang, company } = await params;
+	const companySlug = decodeURIComponent(company || "sgroshi");
+	const t = await getTranslations({ locale: lang, namespace: "Login" });
 
-  // Получаем имя компании или используем default
-  const { data } = await getMfoDetails(
-    companySlug,
-    lang === "ua" ? "uk" : "ru"
-  );
+	// Получаем имя компании или используем default
+	const { data } = await getMfoDetails(
+		companySlug,
+		lang === "ua" ? "uk" : "ru"
+	);
 
+	return (
+		<>
+			<MicrodataLogin
+				title={
+					data.login_page?.meta_title ||
+					t("title", { company: data.name })
+				}
+				description={
+					data.login_page?.meta_description ||
+					t("description", { company: data.name })
+				}
+				companySlug={companySlug}
+				locale={lang as "ua" | "ru"}
+			/>
+			<Bread lang={lang as "ru" | "ua"} />
+			<div className="px-0 md:px-[20px]">
+				<h1
+					className="text-[20px] sm:text-[28px] md:text-[36px] font-[700] leading-[100%] text-[#222] mb-[14px] sm:mb-[25px] md:mb-[30px]"
+					style={{ fontFamily: "var(--Jakarta)" }}
+				>
+					{data.login_page?.h1_title || t("title", { company })}
+				</h1>
+			</div>
+			<AboutButtons />
 
-
-  return (
-    <>
-    <MicrodataLogin
-        title={data.login_page?.meta_title || t("title", { company: data.name })}
-        description={data.login_page?.meta_description || t("description", { company: data.name })}
-        companyName={data.name || t(`company.${companySlug}.name`)}
-        companySlug={companySlug}
-        locale={lang as 'ua' | 'ru'}
-      />
-      <Bread  lang={lang as "ru" | "ua"}/>
-      <div className="px-0 md:px-[20px]">
-        <h1
-          className="text-[20px] sm:text-[28px] md:text-[36px] font-[700] leading-[100%] text-[#222] mb-[14px] sm:mb-[25px] md:mb-[30px]"
-          style={{ fontFamily: "var(--Jakarta)" }}
-        >
-            {data.login_page?.h1_title || t("title", { company })}
-        </h1>
-      </div>
-      <AboutButtons />
-
-      <div
-        className="mt-6 prose text-black"
-        dangerouslySetInnerHTML={{ __html: data.login_page?.content || "" }}
-      />
-      {/* <div className="px-0 md:px-[20px]">
+			<div
+				className="mt-6 prose text-black"
+				dangerouslySetInnerHTML={{
+					__html: data.login_page?.content || "",
+				}}
+			/>
+			{/* <div className="px-0 md:px-[20px]">
         <div className="border border-[#d6d6f9] rounded-lg p-[30px] w-full bg-white">
           <p className="mb-[20px] font-medium text-[13px] leading-[138%] text-[#222]">
             {t("content.title")}
@@ -210,8 +216,8 @@ const Login: NextPage<Props> = async ({ params }) => {
           {t("metadata.updatedDate")}
         </p>
       </div> */}
-    </>
-  );
+		</>
+	);
 };
 
 export default Login;

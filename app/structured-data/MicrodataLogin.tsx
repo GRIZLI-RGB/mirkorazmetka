@@ -1,30 +1,35 @@
-// app/structured-data/MicrodataLogin.tsx
-import Script from "next/script";
+import { getDefaultWebPageSchema } from "./defaults";
 
 type MicrodataLoginProps = {
-  title: string;
-  description: string;
-  companyName: string;
-  companySlug: string;
-  locale: "ru" | "ua";
+	title: string;
+	description: string;
+	companySlug: string;
+	locale: "ru" | "ua";
 };
 
-export const MicrodataLogin = ({ title, description, companyName, companySlug, locale }: MicrodataLoginProps) => {
-  const webPageSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    name: title,
-    description: description,
-    url: `https://mfoxa.com.ua/${locale}/mfo/${companySlug}/login`,
-    about: {
-      "@type": "FinancialService",
-      name: companyName,
-    },
-  };
+export const MicrodataLogin = ({
+	title,
+	description,
+	companySlug,
+	locale,
+}: MicrodataLoginProps) => {
+	const webPageSchema = getDefaultWebPageSchema({
+		lang: locale,
+		dates: {
+			date_modified: new Date().toISOString(),
+			date_published: new Date().toISOString(),
+		},
+		title,
+		description,
+		path: `/mfo/${companySlug}/login`,
+	});
 
-  return (
-    <Script id="login-schema" type="application/ld+json">
-      {JSON.stringify(webPageSchema, null, 2)}
-    </Script>
-  );
+	return (
+		<script
+			type="application/ld+json"
+			dangerouslySetInnerHTML={{
+				__html: JSON.stringify(webPageSchema),
+			}}
+		/>
+	);
 };
