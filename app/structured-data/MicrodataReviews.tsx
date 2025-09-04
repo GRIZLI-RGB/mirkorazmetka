@@ -1,5 +1,6 @@
 import { ReviewsApiResponse } from "@/app/services/reviewService";
 import { getValidRatingOrCount } from "../lib/utils";
+import { emptyAddress } from "./defaults";
 
 type MicrodataReviewsProps = {
 	reviewsData: ReviewsApiResponse | null;
@@ -131,6 +132,7 @@ export const MicrodataReviews = ({
 			bestRating: 5,
 			worstRating: 1,
 		},
+		address: emptyAddress,
 		review: sortedReviews.map((review) => ({
 			"@type": "Review",
 			author: {
