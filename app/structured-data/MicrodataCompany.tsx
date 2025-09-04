@@ -83,7 +83,7 @@ export const MicrodataCompany = ({
 			maxValue: data.tariffs?.[0]?.max_term || 30,
 			unitText: "DAY",
 		},
-		loanAmount: {
+		amount: {
 			"@type": "MonetaryAmount",
 			minValue: data.tariffs?.[0]?.min_amount || 1000,
 			maxValue: data.tariffs?.[0]?.max_amount || 30000,

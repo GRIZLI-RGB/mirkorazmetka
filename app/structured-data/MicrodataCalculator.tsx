@@ -1,5 +1,3 @@
-// app/structured-data/MicrodataCalculator.tsx
-import Script from "next/script";
 import { useTranslations } from "next-intl";
 
 type MicrodataCalculatorProps = {
@@ -22,11 +20,27 @@ export const MicrodataCalculator = ({
 		url: `https://mfoxa.com.ua/${locale}/mfo/${companyName
 			.toLowerCase()
 			.replace(/\s/g, "-")}`,
+		offers: {
+			"@type": "Offer",
+			price: "0", // калькулятор бесплатный
+			priceCurrency: "UAH",
+			availability: "https://schema.org/InStock",
+		},
+		aggregateRating: {
+			"@type": "AggregateRating",
+			ratingValue: 5,
+			ratingCount: 1,
+			bestRating: 5,
+			worstRating: 1,
+		},
 	};
 
 	return (
-		<Script id="calculator-schema" type="application/ld+json">
-			{JSON.stringify(calculatorSchema, null, 2)}
-		</Script>
+		<script
+			dangerouslySetInnerHTML={{
+				__html: JSON.stringify(calculatorSchema),
+			}}
+			type="application/ld+json"
+		/>
 	);
 };
