@@ -5,7 +5,6 @@ import { catalogService } from "@/app/services/catalogService";
 import { getPageDates } from "@/app/services/PageDatesService";
 import settingsService from "@/app/services/settingsService";
 import { getHomeData, LangType } from "@/app/services/HomeService";
-import { MicrodataLoanCatalog } from "@/app/structured-data/MicrodataLoanCatalog";
 import { BezotkazaStructuredData } from "@/app/structured-data/BezotkazaStructuredData";
 import { Metadata } from "next";
 
@@ -103,11 +102,6 @@ export default async function LoanDescription({
 				dates={dates}
 				randomAuthor={randomAuthor}
 				getAllSettings={getAllSettings}
-			/>
-			<MicrodataLoanCatalog
-				data={data}
-				locale={lang as "ua" | "ru"}
-				slug={slug}
 			/>
 			<CreditClientPage
 				page={res.page}
