@@ -8,6 +8,8 @@ type MicrodataQAPProps = {
 };
 
 export const MicrodataQAP = ({ questions, dates }: MicrodataQAPProps) => {
+	if (!questions || questions.length === 0) return null;
+
 	const qaSchema = {
 		"@context": "https://schema.org",
 		"@type": "QAPage",
