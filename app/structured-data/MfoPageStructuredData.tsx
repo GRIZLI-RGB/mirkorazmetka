@@ -57,10 +57,10 @@ export const MfoPageStructuredData = async ({
 				logo: mfo.logo_url,
 				aggregateRating: {
 					"@type": "AggregateRating",
-					ratingValue: mfo?.rating_average ?? 5,
+					ratingValue: mfo?.rating_average || 5,
 					bestRating: 5,
 					worstRating: 1,
-					ratingCount: mfo?.rating_count ?? 1,
+					ratingCount: Number(mfo?.rating_count) || 1,
 				},
 			},
 		})),
