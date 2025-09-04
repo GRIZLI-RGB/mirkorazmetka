@@ -19,7 +19,7 @@ import { ScrollReset } from "@/app/components/ScrollReset";
 import ClientOnly from "@/app/components/ClientOnly";
 import { LastReviews } from "@/app/components/Home/LastRewiews";
 import { localePrefix } from "@/app/config/routesMap";
-import { PageReview } from "@/app/structured-data/PageReview";
+// import { PageReview } from "@/app/structured-data/PageReview";
 import { LangType } from "@/app/services/HomeService";
 
 export const revalidate = 60;
@@ -142,7 +142,7 @@ export default async function CatalogPage({ params }: PageProps) {
 				lang={lang as LangType}
 				company={companySlug}
 				data={data}
-			/>{" "}
+			/>
 			<Bread lang={lang as "ua" | "ru"} />
 			<div className="px-0 md:px-[20px]">
 				<div className="p-[10px] md:p-[30px] sm:p-[20px] mb-[30px] md:mb-[50px] bg-white rounded-lg mt-[10px]">
@@ -558,10 +558,10 @@ export default async function CatalogPage({ params }: PageProps) {
 			/>
 			<div className="h-[30px]"></div>
 			<DetailsText html={data.seo_text} />
-			<PageReview
+			{/* <PageReview
 				author={{ data: { name: "Эксперт MFoxa" } } as any}
 				pageName={data.name}
-			/>
+			/> */}
 			{/* <LastReviews recent_reviews={data.recent_reviews || []} /> <DetailsText /> */}
 			<div className="px-0 md:px-[20px]">
 				{data.created_at && (
