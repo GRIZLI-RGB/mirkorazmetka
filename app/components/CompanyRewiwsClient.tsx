@@ -377,6 +377,22 @@ export default function CompanyRewiwsClient({
 									<meta itemProp="bestRating" content="5" />
 									<meta itemProp="worstRating" content="1" />
 								</div>
+								{/* <div
+									itemProp="itemReviewed"
+									itemScope
+									itemType="https://schema.org/FinancialService"
+								>
+									<meta
+										itemProp="name"
+										content={getCompanyName()}
+									/>
+									<meta
+										itemProp="url"
+										content={`https://mfoxa.com.ua${
+											lang === "ru" ? "/ru" : ""
+										}/mfo/${slug}`}
+									/>
+								</div> */}
 								<div
 									itemProp="itemReviewed"
 									itemScope
@@ -392,6 +408,32 @@ export default function CompanyRewiwsClient({
 											lang === "ru" ? "/ru" : ""
 										}/mfo/${slug}`}
 									/>
+									<div
+										itemProp="address"
+										itemScope
+										itemType="https://schema.org/PostalAddress"
+									>
+										<meta
+											itemProp="streetAddress"
+											content="ул. Примерная, 12"
+										/>
+										<meta
+											itemProp="addressLocality"
+											content="Киев"
+										/>
+										<meta
+											itemProp="addressRegion"
+											content="Киевская область"
+										/>
+										<meta
+											itemProp="postalCode"
+											content="01001"
+										/>
+										<meta
+											itemProp="addressCountry"
+											content="UA"
+										/>
+									</div>
 								</div>
 								{review.admin_response && (
 									<div
