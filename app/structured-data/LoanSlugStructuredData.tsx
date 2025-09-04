@@ -68,26 +68,26 @@ export const LoanSlugStructuredData: React.FC<LoanSlugStructuredDataProps> = ({
 							maxValue: offer.term_max,
 						},
 						interestRate: offer.interestRate,
+						annualPercentageRate: {
+							"@type": "QuantitativeValue",
+							unitText: "PERCENT",
+							minValue: loan.apr_min ?? 0,
+							maxValue: loan.apr_max ?? 0,
+						},
+						provider: {
+							"@type": "Organization",
+							name: loan.legal_name ?? loan.name,
+							additionalProperty: loan.license
+								? {
+										"@type": "PropertyValue",
+										name: "Лицензия НБУ",
+										value: loan.license,
+								  }
+								: undefined,
+						},
 					},
 					url: offer.url,
 				})),
-				annualPercentageRate: {
-					"@type": "QuantitativeValue",
-					unitText: "PERCENT",
-					minValue: loan.apr_min ?? 0,
-					maxValue: loan.apr_max ?? 0,
-				},
-				provider: {
-					"@type": "Organization",
-					name: loan.legal_name ?? loan.name,
-					additionalProperty: loan.license
-						? {
-								"@type": "PropertyValue",
-								name: "Лицензия НБУ",
-								value: loan.license,
-						  }
-						: undefined,
-				},
 				url: loan.url,
 				mainEntityOfPage: pageUrl,
 				aggregateRating: {
