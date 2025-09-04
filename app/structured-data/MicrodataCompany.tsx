@@ -45,6 +45,9 @@ export const MicrodataCompany = ({
 			availableLanguage: ["Ukrainian", "Russian"],
 		},
 		address: emptyAddress,
+		priceRange: "$$",
+		telephone: "-",
+		image: `https://mfoxa.com.ua/logo.png`,
 		aggregateRating: {
 			"@type": "AggregateRating",
 			ratingValue: Number(data?.rating_average) || 5,
@@ -77,6 +80,9 @@ export const MicrodataCompany = ({
 			"@type": "FinancialService",
 			name: data.name,
 			address: emptyAddress,
+			priceRange: "$$",
+			telephone: "-",
+			image: `https://mfoxa.com.ua/logo.png`,
 		},
 		loanTerm: {
 			"@type": "QuantitativeValue",
