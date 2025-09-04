@@ -94,11 +94,15 @@ export const LoanSlugStructuredData: React.FC<LoanSlugStructuredDataProps> = ({
 				aggregateRating: {
 					"@type": "AggregateRating",
 					ratingValue: loan.rating_value ?? 5,
-					reviewCount: loan.review_count ?? 0,
+					reviewCount:
+						loan.review_count && loan.review_count > 0
+							? loan.review_count
+							: 1,
 				},
 				address: emptyAddress,
 				priceRange: "$$",
-				image: loan.logo_url,
+				image: loan.logo_url || undefined,
+				telephone: "-",
 			},
 		})),
 	};
