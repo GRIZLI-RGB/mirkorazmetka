@@ -43,7 +43,6 @@ export const MfoPageStructuredData = async ({
 		description:
 			getAllSettings?.settings.mfo_page_description ||
 			"Лучшие микрофинансовые организации по отзывам клиентов",
-		itemListOrder: "https://schema.org/ItemListOrderDescending",
 		itemListElement: uniqueMFOs.map((mfo, index) => ({
 			"@type": "ListItem",
 			position: index + 1,
