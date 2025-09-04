@@ -35,7 +35,6 @@ export const MicrodataAllReviews = ({
 			position: index + 1,
 			item: {
 				"@type": "Review",
-				"@id": `https://mfoxa.com.ua/${locale}/mfo/${review.mfo.slug}#review-${review.id}`,
 				author: {
 					"@type": "Person",
 					name:
@@ -54,12 +53,7 @@ export const MicrodataAllReviews = ({
 					"@type": "FinancialService",
 					name: review.mfo.name,
 					url: `https://mfoxa.com.ua/${locale}/mfo/${review.mfo.slug}`,
-				},
-				publisher: {
-					"@type": "Organization",
-					name: "MFoxa",
-					url: "https://mfoxa.com.ua",
-				},
+				}
 			},
 		})),
 	};
