@@ -51,6 +51,7 @@ export const MfoPageStructuredData = async ({
 				position: index + 1,
 				item: {
 					"@type": "Organization",
+					name: mfo.name.trim(),
 					url:
 						mfo.redirect_url ||
 						mfo.official_website ||
