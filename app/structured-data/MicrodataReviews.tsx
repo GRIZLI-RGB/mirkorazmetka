@@ -132,6 +132,9 @@ export const MicrodataReviews = ({
 			bestRating: 5,
 			worstRating: 1,
 		},
+		telephone: "-",
+		priceRange: "$$",
+		image: `https://mfoxa.com.ua/logo.png`,
 		address: emptyAddress,
 		review: sortedReviews.map((review) => ({
 			"@type": "Review",
