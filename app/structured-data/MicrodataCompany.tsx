@@ -76,6 +76,7 @@ export const MicrodataCompany = ({
 		provider: {
 			"@type": "FinancialService",
 			name: data.name,
+			address: emptyAddress,
 		},
 		loanTerm: {
 			"@type": "QuantitativeValue",
