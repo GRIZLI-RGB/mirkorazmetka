@@ -1,35 +1,32 @@
 import { MfoDetails } from "@/app/services/getMfoDetailsService";
 import { PageDatesResponse } from "@/app/services/PageDatesService";
-import { getValidRatingOrCount } from "../lib/utils";
+import { LangType } from "../services/HomeService";
+import { emptyAddress, getDefaultWebPageSchema } from "./defaults";
 
 type MicrodataCompanyProps = {
 	company: string;
 	data: MfoDetails;
 	dates?: PageDatesResponse | null;
+	lang: LangType;
 };
 
 export const MicrodataCompany = ({
 	company,
 	data,
 	dates,
+	lang,
 }: MicrodataCompanyProps) => {
-	// WebPage schema
-	const webPageSchema = {
-		"@context": "https://schema.org",
-		"@type": "WebPage",
-		name: data.name || "Информация о МФО",
-		description: `Условия займов и отзывы о ${data.name}`,
-		url: `https://mfoxa.com.ua/mfo/${company}`,
-		datePublished: dates?.date_published,
-		dateModified: dates?.date_modified,
-		publisher: {
-			"@type": "Organization",
-			name: "MFoxa",
-			url: "https://mfoxa.com.ua",
+	const webPageSchema = getDefaultWebPageSchema({
+		lang,
+		dates: {
+			date_modified: dates?.date_modified || new Date().toISOString(),
+			date_published: dates?.date_published || new Date().toISOString(),
 		},
-	};
+		title: data.name || "Информация о МФО",
+		description: `Условия займов и отзывы о ${data.name}`,
+		path: `/mfo/${company}`,
+	});
 
-	// Organization schema for the MFO company
 	const organizationSchema = {
 		"@context": "https://schema.org",
 		"@type": "FinancialService",
@@ -47,17 +44,13 @@ export const MicrodataCompany = ({
 			areaServed: "UA",
 			availableLanguage: ["Ukrainian", "Russian"],
 		},
-		address: {
-			"@type": "PostalAddress",
-			streetAddress: data.legal_address,
-			addressCountry: "UA",
-		},
+		address: emptyAddress,
 		aggregateRating: {
 			"@type": "AggregateRating",
-			ratingValue: getValidRatingOrCount(data.rating_average),
-			bestRating: "5",
-			worstRating: "1",
-			ratingCount: getValidRatingOrCount(data.rating_count, true),
+			ratingValue: Number(data?.rating_average) || 5,
+			bestRating: 5,
+			worstRating: 1,
+			ratingCount: Number(data?.rating_count) || 1,
 		},
 		hasOfferCatalog: {
 			"@type": "OfferCatalog",
@@ -75,7 +68,6 @@ export const MicrodataCompany = ({
 		},
 	};
 
-	// LoanOrCredit schema for loan products
 	const loanSchema = {
 		"@context": "https://schema.org",
 		"@type": "LoanOrCredit",

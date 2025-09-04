@@ -20,9 +20,9 @@ import ClientOnly from "@/app/components/ClientOnly";
 import { LastReviews } from "@/app/components/Home/LastRewiews";
 import { localePrefix } from "@/app/config/routesMap";
 import { PageReview } from "@/app/structured-data/PageReview";
+import { LangType } from "@/app/services/HomeService";
 
-// export const dynamic = "force-dynamic";
-export const revalidate = 60; // ISR / 1 минута
+export const revalidate = 60;
 
 interface PageProps {
 	params: Promise<{ lang: string; company: string }>;
@@ -138,7 +138,11 @@ export default async function CatalogPage({ params }: PageProps) {
 			<ClientOnly>
 				<ScrollReset />
 			</ClientOnly>
-			<MicrodataCompany company={companySlug} data={data} />{" "}
+			<MicrodataCompany
+				lang={lang as LangType}
+				company={companySlug}
+				data={data}
+			/>{" "}
 			<Bread lang={lang as "ua" | "ru"} />
 			<div className="px-0 md:px-[20px]">
 				<div className="p-[10px] md:p-[30px] sm:p-[20px] mb-[30px] md:mb-[50px] bg-white rounded-lg mt-[10px]">
