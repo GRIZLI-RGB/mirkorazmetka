@@ -54,6 +54,7 @@ export const ContactStructuredData = ({
 			longitude: "36.2304",
 		},
 		openingHours: ["Mo-Fr 09:00-18:00"],
+		priceRange: "$$",
 	};
 
 	const allSchemas = [webPageSchema, localBusinessSchema];
