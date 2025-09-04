@@ -3,22 +3,10 @@
 import { usePathname } from "next/navigation";
 
 import { LangType } from "../services/HomeService";
+import { addressByLang } from "./defaults";
 
 export default function StructuredData({ lang }: { lang: LangType }) {
 	const pathname = usePathname();
-
-	const addressByLang = {
-		ru: {
-			addressRegion: "Харьковская обл.",
-			streetAddress: "Архитекторов 32",
-			addressLocality: "Харьков",
-		},
-		ua: {
-			addressRegion: "Харківська обл.",
-			streetAddress: "Архітекторів 32",
-			addressLocality: "Харків",
-		},
-	};
 
 	// 1. Organization
 	const organization = {

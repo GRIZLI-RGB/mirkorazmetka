@@ -1,7 +1,6 @@
-// app/structured-data/ContactStructuredData.tsx
-import Script from "next/script";
 import { PageDatesResponse } from "@/app/services/PageDatesService";
 import { SettingsGroupResponse } from "@/app/services/settingsService";
+import { addressByLang, getDefaultWebPageSchema } from "./defaults";
 
 type ContactStructuredDataProps = {
 	lang: "ru" | "ua";
@@ -14,92 +13,40 @@ export const ContactStructuredData = ({
 	dates,
 	getAllSettings,
 }: ContactStructuredDataProps) => {
-	// WebPage schema
-	const webPageSchema = {
-		"@context": "https://schema.org",
-		"@type": "WebPage",
-		name: getAllSettings?.settings.contacts_page_title || "Контакты MFoxa",
+	const webPageSchema = getDefaultWebPageSchema({
+		lang,
+		title:
+			getAllSettings?.settings.contacts_page_title ||
+			(lang === "ua" ? "Контакти MFoxa" : "Контакты MFoxa"),
 		description:
 			getAllSettings?.settings.contacts_page_description ||
-			"Контактная информация финансового маркетплейса MFoxa",
-		url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/contacts`,
-		datePublished: dates.date_published,
-		dateModified: dates.date_modified,
-		publisher: {
-			"@type": "Organization",
-			name: "MFoxa",
-			url: "https://mfoxa.com.ua",
-		},
-	};
+			(lang === "ua"
+				? "Контактна інформація фінансового маркетплейсу MFoxa"
+				: "Контактная информация финансового маркетплейса MFoxa"),
+		path: "/contacts",
+		dates,
+	});
 
-	// Organization schema for MFoxa
-	const organizationSchema = {
-		"@context": "https://schema.org",
-		"@type": "Organization",
-		name: "MFoxa",
-		url: "https://mfoxa.com.ua",
-		description:
-			"Финансовый маркетплейс микрофинансовых организаций Украины",
-		logo: "https://mfoxa.com.ua/logo.png",
-		contactPoint: [
-			{
-				"@type": "ContactPoint",
-				telephone: "+38 (093) 000-00-00",
-				contactType: "customer service",
-				email: "admin@mfoxa.com.ua",
-				areaServed: "UA",
-				availableLanguage: ["Russian", "Ukrainian"],
-				hoursAvailable: {
-					"@type": "OpeningHoursSpecification",
-					dayOfWeek: [
-						"Monday",
-						"Tuesday",
-						"Wednesday",
-						"Thursday",
-						"Friday",
-					],
-					opens: "09:00",
-					closes: "18:00",
-				},
-			},
-			{
-				"@type": "ContactPoint",
-				telephone: "+38 (063) 000-00-00",
-				contactType: "technical support",
-				email: "support@mfoxa.com.ua",
-				areaServed: "UA",
-			},
-		],
-		address: {
-			"@type": "PostalAddress",
-			streetAddress: "Архитекторів 32",
-			addressLocality: "Харьков",
-			postalCode: "61174",
-			addressRegion: "Харківська обл.",
-			addressCountry: "UA",
-		},
-		sameAs: ["https://t.me/mfoxa", "https://facebook.com/mfoxa"],
-		foundingDate: "2020",
-		hasCredential: "Лицензия НБУ",
-	};
-
-	// LocalBusiness schema for physical location
 	const localBusinessSchema = {
 		"@context": "https://schema.org",
 		"@type": "LocalBusiness",
-		name: "MFoxa - Финансовый маркетплейс",
-		description: "Офис финансового маркетплейса MFoxa в Харькове",
+		name:
+			lang === "ua"
+				? "MFoxa – Фінансовий маркетплейс"
+				: "MFoxa – Финансовый маркетплейс",
+		description:
+			lang === "ua"
+				? "Офіс фінансового маркетплейсу MFoxa у Харкові"
+				: "Офис финансового маркетплейса MFoxa в Харькове",
 		url: "https://mfoxa.com.ua",
-		telephone: "+38 (093) 000-00-00",
+		telephone: "+380930000000",
 		email: "admin@mfoxa.com.ua",
 		image: "https://mfoxa.com.ua/logo.png",
 		address: {
 			"@type": "PostalAddress",
-			streetAddress: "Архитекторів 32",
-			addressLocality: "Харьков",
 			postalCode: "61174",
-			addressRegion: "Харківська обл.",
 			addressCountry: "UA",
+			...addressByLang[lang],
 		},
 		geo: {
 			"@type": "GeoCoordinates",
@@ -107,21 +54,18 @@ export const ContactStructuredData = ({
 			longitude: "36.2304",
 		},
 		openingHours: ["Mo-Fr 09:00-18:00"],
-		priceRange: "$$",
 	};
 
-	// Combine all schemas
-	const allSchemas = [webPageSchema, organizationSchema, localBusinessSchema];
+	const allSchemas = [webPageSchema, localBusinessSchema];
 
 	return (
 		<>
 			{allSchemas.map((schema, index) => (
-				<Script
+				<script
 					key={index}
-					id={`contact-schema-${index}`}
 					type="application/ld+json"
 					dangerouslySetInnerHTML={{
-						__html: JSON.stringify(schema, null, 2),
+						__html: JSON.stringify(schema),
 					}}
 				/>
 			))}

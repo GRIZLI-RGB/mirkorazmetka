@@ -1,7 +1,7 @@
 import { Author } from "@/app/services/authorsService";
 import { PageDatesResponse } from "@/app/services/PageDatesService";
 import { SettingsGroupResponse } from "@/app/services/settingsService";
-import { getDefaultWebPageSchema } from "./defaults";
+import { getDefaultWebPageSchema, knowsAboutByLang } from "./defaults";
 
 type AboutStructuredDataProps = {
 	lang: "ru" | "ua";
@@ -20,10 +20,14 @@ export const AboutStructuredData = ({
 		lang,
 		title:
 			getAllSettings?.settings.about_page_title ||
-			"Наша команда экспертов",
+			(lang === "ua"
+				? "Наша команда експертів"
+				: "Наша команда экспертов"),
 		description:
 			getAllSettings?.settings.about_page_description ||
-			"Команда профессионалов финансовой сферы",
+			(lang === "ua"
+				? "Команда професіоналів фінансової сфери"
+				: "Команда профессионалов финансовой сферы"),
 		path: "/about",
 		dates,
 	});
@@ -32,17 +36,15 @@ export const AboutStructuredData = ({
 		"@context": "https://schema.org",
 		"@type": "Person",
 		name: author.name,
-		jobTitle: author.role || "Эксперт",
+		jobTitle: author.role || (lang === "ua" ? "Експерт" : "Эксперт"),
 		description: `${author.education} | ${author.work_experience}`,
-		knowsAbout: [
-			"Микрофинансирование",
-			"Финансовые услуги",
-			"Кредитование",
-		],
+		knowsAbout: knowsAboutByLang[lang],
 		hasCredential: {
 			"@type": "EducationalOccupationalCredential",
 			credentialCategory: "License",
-			name: author.additional_qualification || "Лицензия НБУ",
+			name:
+				author.additional_qualification ||
+				(lang === "ua" ? "Ліцензія НБУ" : "Лицензия НБУ"),
 		},
 		image: author.avatar,
 		worksFor: {

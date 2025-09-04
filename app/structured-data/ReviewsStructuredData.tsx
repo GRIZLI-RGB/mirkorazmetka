@@ -47,28 +47,6 @@ export const ReviewsStructuredData = ({
 		},
 	};
 
-	// BreadcrumbList schema
-	// const breadcrumbSchema = {
-	// 	"@context": "https://schema.org",
-	// 	"@type": "BreadcrumbList",
-	// 	itemListElement: [
-	// 		{
-	// 			"@type": "ListItem",
-	// 			position: 1,
-	// 			name: "Главная",
-	// 			item: "https://mfoxa.com.ua",
-	// 		},
-	// 		{
-	// 			"@type": "ListItem",
-	// 			position: 2,
-	// 			name: lang === "ru" ? "Отзывы" : "Відгуки",
-	// 			item: `https://mfoxa.com.ua${
-	// 				lang === "ru" ? "/ru" : ""
-	// 			}/reviews`,
-	// 		},
-	// 	],
-	// };
-
 	// ItemList schema for reviews statistics
 	const itemListSchema = {
 		"@context": "https://schema.org",

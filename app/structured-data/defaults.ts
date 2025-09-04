@@ -1,5 +1,23 @@
 import { LangType } from "../services/HomeService";
 
+export const knowsAboutByLang = {
+	ru: ["Микрофинансирование", "Финансовые услуги", "Кредитование"],
+	ua: ["Мікрофінансування", "Фінансові послуги", "Кредитування"],
+};
+
+export const addressByLang = {
+	ru: {
+		addressRegion: "Харьковская обл.",
+		streetAddress: "Архитекторов 32",
+		addressLocality: "Харьков",
+	},
+	ua: {
+		addressRegion: "Харківська обл.",
+		streetAddress: "Архітекторів 32",
+		addressLocality: "Харків",
+	},
+};
+
 export const getDefaultWebPageSchema = ({
 	lang,
 	title,
