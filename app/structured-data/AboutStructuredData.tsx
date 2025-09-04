@@ -1,8 +1,7 @@
-// app/structured-data/AboutStructuredData.tsx
-import Script from "next/script";
 import { Author } from "@/app/services/authorsService";
 import { PageDatesResponse } from "@/app/services/PageDatesService";
 import { SettingsGroupResponse } from "@/app/services/settingsService";
+import { getDefaultWebPageSchema } from "./defaults";
 
 type AboutStructuredDataProps = {
 	lang: "ru" | "ua";
@@ -17,60 +16,17 @@ export const AboutStructuredData = ({
 	dates,
 	getAllSettings,
 }: AboutStructuredDataProps) => {
-	// WebPage schema
-	const webPageSchema = {
-		"@context": "https://schema.org",
-		"@type": "WebPage",
-		name:
+	const webPageSchema = getDefaultWebPageSchema({
+		lang,
+		title:
 			getAllSettings?.settings.about_page_title ||
 			"Наша команда экспертов",
 		description:
 			getAllSettings?.settings.about_page_description ||
 			"Команда профессионалов финансовой сферы",
-		url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/about`,
-		datePublished: dates.date_published,
-		dateModified: dates.date_modified,
-		publisher: {
-			"@type": "Organization",
-			name: "MFoxa",
-			url: "https://mfoxa.com.ua",
-			description: "Маркетплейс микрофинансовых организаций Украины",
-		},
-	};
-
-	// Organization schema for MFoxa
-	const organizationSchema = {
-		"@context": "https://schema.org",
-		"@type": "Organization",
-		name: "MFoxa",
-		url: "https://mfoxa.com.ua",
-		description: "Маркетплейс микрофинансовых организаций Украины",
-		logo: "https://mfoxa.com.ua/logo.png",
-		address: {
-			"@type": "PostalAddress",
-			addressCountry: "UA",
-			streetAddress: "Архитекторів 32",
-			addressLocality: "Харьков",
-			postalCode: "61174",
-		},
-		hasCredential: {
-			"@type": "EducationalOccupationalCredential",
-			credentialCategory: "License",
-			name: "Лицензия НБУ",
-		},
-		foundingDate: "2020",
-		employee: authors.map((author) => ({
-			"@type": "Person",
-			name: author.name,
-			jobTitle: author.role || "Эксперт",
-			description: author.education,
-			knowsAbout: [
-				"Микрофинансирование",
-				"Финансовые услуги",
-				"Кредитование",
-			],
-		})),
-	};
+		path: "/about",
+		dates,
+	});
 
 	// Person schemas for each team member
 	const personSchemas = authors.map((author) => ({
@@ -84,7 +40,7 @@ export const AboutStructuredData = ({
 			"Финансовые услуги",
 			"Кредитование",
 		],
-    hasCredential: {
+		hasCredential: {
 			"@type": "EducationalOccupationalCredential",
 			credentialCategory: "License",
 			name: author.additional_qualification || "Лицензия НБУ",
@@ -97,20 +53,13 @@ export const AboutStructuredData = ({
 		},
 	}));
 
-	// Combine all schemas
-	const allSchemas = [
-		webPageSchema,
-		// breadcrumbSchema,
-		organizationSchema,
-		...personSchemas,
-	];
+	const allSchemas = [webPageSchema, ...personSchemas];
 
 	return (
 		<>
 			{allSchemas.map((schema, index) => (
-				<Script
+				<script
 					key={index}
-					id={`about-schema-${index}`}
 					type="application/ld+json"
 					dangerouslySetInnerHTML={{
 						__html: JSON.stringify(schema, null, 2),
