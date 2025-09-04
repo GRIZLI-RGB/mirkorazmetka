@@ -18,6 +18,15 @@ export const addressByLang = {
 	},
 };
 
+export const emptyAddress = {
+	"@type": "PostalAddress",
+	streetAddress: "—",
+	addressLocality: "—",
+	addressRegion: "—",
+	postalCode: "—",
+	addressCountry: "UA",
+};
+
 export const getDefaultWebPageSchema = ({
 	lang,
 	title,

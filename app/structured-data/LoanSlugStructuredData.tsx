@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { emptyAddress } from "./defaults";
 
 type OfferType = {
 	name: string;
@@ -95,6 +96,9 @@ export const LoanSlugStructuredData: React.FC<LoanSlugStructuredDataProps> = ({
 					ratingValue: loan.rating_value ?? 5,
 					reviewCount: loan.review_count ?? 0,
 				},
+				address: emptyAddress,
+				priceRange: "$$",
+				image: loan.logo_url,
 			},
 		})),
 	};
