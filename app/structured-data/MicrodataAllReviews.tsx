@@ -30,7 +30,6 @@ export const MicrodataAllReviews = ({
 			(locale === "ua"
 				? "Всі відгуки про МФО"
 				: "Все отзывы об МФО Украины"),
-		inLanguage: locale === "ua" ? "uk-UA" : "ru-UA",
 		itemListElement: reviews.map((review, index) => ({
 			"@type": "ListItem",
 			position: index + 1,
