@@ -53,7 +53,18 @@ export const MicrodataAllReviews = ({
 					"@type": "FinancialService",
 					name: review.mfo.name,
 					url: `https://mfoxa.com.ua/${locale}/mfo/${review.mfo.slug}`,
-				}
+					priceRange: "$$",
+					telephone: "-",
+					image: review.mfo.logo_url,
+					address: {
+						"@type": "PostalAddress",
+						streetAddress: "—",
+						addressLocality: "—",
+						addressRegion: "—",
+						postalCode: "—",
+						addressCountry: "UA",
+					},
+				},
 			},
 		})),
 	};
