@@ -1,5 +1,3 @@
-import Script from "next/script";
-
 interface Tariff {
 	id: number;
 	name: string;
@@ -56,8 +54,11 @@ export const MicrodataLoanOrCredit = ({
 	};
 
 	return (
-		<Script id="loan-or-credit-schema" type="application/ld+json">
-			{JSON.stringify(loanOrCreditSchema, null, 2)}
-		</Script>
+		<script
+			type="application/ld+json"
+			dangerouslySetInnerHTML={{
+				__html: JSON.stringify(loanOrCreditSchema),
+			}}
+		/>
 	);
 };
