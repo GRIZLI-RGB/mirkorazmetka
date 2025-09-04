@@ -1,11 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Metadata } from "next";
+
 import LoanClientPage from "@/app/components/LoanClientPage";
 import authorsService from "@/app/services/authorsService";
 import { catalogService } from "@/app/services/catalogService";
 import { getPageDates } from "@/app/services/PageDatesService";
 import settingsService from "@/app/services/settingsService";
 import { getHomeData, LangType } from "@/app/services/HomeService";
-import { Metadata } from "next";
+import { LoanSlugStructuredData } from "@/app/structured-data/LoanSlugStructuredData";
 
 export async function generateMetadata({
 	params,
@@ -37,10 +38,12 @@ export async function generateMetadata({
 		},
 	};
 }
+
 type LoanDescriptionProps = {
 	params: Promise<{ lang: string; slug: string }>;
 	searchParams: Promise<{ count?: string }>;
 };
+
 export default async function LoanDescription({
 	params,
 	searchParams,
@@ -67,14 +70,9 @@ export default async function LoanDescription({
 			slug,
 			lang: lang === "ua" ? "uk" : "ru",
 		});
-	} catch (error: any) {
+	} catch {
 		console.error("❌ Ошибка получения по slug:", slug);
-		console.error("Axios message:", error);
-		console.error("Axios response:", error?.response?.data || "Нет ответа");
-
-		throw new Error(
-			`Ошибка при запросе catalogService.getBySlug: ${error.message}`
-		);
+		throw new Error(`Ошибка при запросе catalogService.getBySlug`);
 	}
 	const dates = await getPageDates({ type: "loans" });
 	const randomAuthor = await authorsService.getRandomAuthor(
@@ -98,6 +96,44 @@ export default async function LoanDescription({
 
 	return (
 		<>
+			<LoanSlugStructuredData
+				pageTitle={res.page.meta_title}
+				pageUrl={`https://mfoxa.com.ua${
+					lang === "ru" ? "/ru" : ""
+				}/loan/${slug}`}
+				loans={data.data.map((item) => ({
+					name: item.button_name,
+					url: `https://mfoxa.com.ua${
+						lang === "ru" ? "/ru" : ""
+					}/loan/${item.slug}`,
+					legal_name: item.meta_title,
+					license: undefined,
+					apr_min: 0,
+					apr_max: 1,
+					rating_value: 5,
+					review_count: 0,
+					offers: [
+						{
+							name: "Первый кредит",
+							url: `https://mfoxa.com.ua/apply?type=first&loan=${item.slug}`,
+							amount_min: 0,
+							amount_max: 5000,
+							term_min: 1,
+							term_max: 30,
+							interestRate: 0,
+						},
+						{
+							name: "Повторный кредит",
+							url: `https://mfoxa.com.ua/apply?type=repeat&loan=${item.slug}`,
+							amount_min: 0,
+							amount_max: 30000,
+							term_min: 1,
+							term_max: 30,
+							interestRate: 0.01,
+						},
+					],
+				}))}
+			/>
 			<LoanClientPage
 				page={res.page}
 				getAllSettings={getAllSettings}
