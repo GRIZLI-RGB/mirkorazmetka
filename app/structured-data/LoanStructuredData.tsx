@@ -1,9 +1,6 @@
-// app/structured-data/LoanStructuredData.tsx
-import Script from "next/script";
 import { GetCatalogListResponse } from "@/app/services/catalogService";
 import { PageDatesResponse } from "@/app/services/PageDatesService";
 import { AuthorRandomResponse } from "@/app/services/authorsService";
-import { FaqsResponse } from "@/app/services/FaqService";
 import { SettingsGroupResponse } from "@/app/services/settingsService";
 
 type LoanStructuredDataProps = {
@@ -11,7 +8,6 @@ type LoanStructuredDataProps = {
 	data: GetCatalogListResponse;
 	dates: PageDatesResponse;
 	randomAuthor: AuthorRandomResponse;
-	faqs: FaqsResponse;
 	getAllSettings: SettingsGroupResponse | undefined;
 };
 
@@ -20,7 +16,6 @@ export const LoanStructuredData = ({
 	data,
 	dates,
 	randomAuthor,
-	faqs,
 	getAllSettings,
 }: LoanStructuredDataProps) => {
 	// WebPage schema
@@ -45,26 +40,6 @@ export const LoanStructuredData = ({
 			name: "MFoxa",
 			url: "https://mfoxa.com.ua",
 		},
-	};
-
-	// BreadcrumbList schema
-	const breadcrumbSchema = {
-		"@context": "https://schema.org",
-		"@type": "BreadcrumbList",
-		itemListElement: [
-			{
-				"@type": "ListItem",
-				position: 1,
-				name: "Главная",
-				item: "https://mfoxa.com.ua",
-			},
-			{
-				"@type": "ListItem",
-				position: 2,
-				name: lang === "ru" ? "Займы" : "Позики",
-				item: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/loan`,
-			},
-		],
 	};
 
 	// ItemList schema for loan catalog
@@ -108,23 +83,6 @@ export const LoanStructuredData = ({
 		})),
 	};
 
-	// FAQPage schema if FAQs exist
-	const faqSchema =
-		faqs && faqs.length > 0
-			? {
-					"@context": "https://schema.org",
-					"@type": "FAQPage",
-					mainEntity: faqs.map((faq) => ({
-						"@type": "Question",
-						name: faq.question,
-						acceptedAnswer: {
-							"@type": "Answer",
-							text: faq.answer,
-						},
-					})),
-			  }
-			: null;
-
 	// Review schema for page rating
 	const reviewSchema = {
 		"@context": "https://schema.org",
@@ -148,40 +106,16 @@ export const LoanStructuredData = ({
 		},
 	};
 
-	// Organization schema for MFoxa
-	const organizationSchema = {
-		"@context": "https://schema.org",
-		"@type": "Organization",
-		name: "MFoxa",
-		url: "https://mfoxa.com.ua",
-		description: "Агрегатор займов и МФО Украины",
-		logo: "https://mfoxa.com.ua/logo.png",
-		sameAs: ["https://t.me/mfoxa_ua", "https://www.facebook.com/mfoxa.ua"],
-	};
-
-	// Combine all schemas
-	const allSchemas: object[] = [
-		webPageSchema,
-		breadcrumbSchema,
-		itemListSchema,
-		reviewSchema,
-		organizationSchema,
-	];
-
-	// Add FAQ schema if available
-	if (faqSchema) {
-		allSchemas.push(faqSchema);
-	}
+	const allSchemas: object[] = [webPageSchema, itemListSchema, reviewSchema];
 
 	return (
 		<>
 			{allSchemas.map((schema, index) => (
-				<Script
+				<script
 					key={index}
-					id={`loan-schema-${index}`}
 					type="application/ld+json"
 					dangerouslySetInnerHTML={{
-						__html: JSON.stringify(schema, null, 2),
+						__html: JSON.stringify(schema),
 					}}
 				/>
 			))}

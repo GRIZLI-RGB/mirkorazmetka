@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import Script from "next/script";
 import { MfoDetails } from "@/app/services/getMfoDetailsService";
 import { PageDatesResponse } from "@/app/services/PageDatesService";
 import { getValidRatingOrCount } from "../lib/utils";
@@ -29,32 +27,6 @@ export const MicrodataCompany = ({
 			name: "MFoxa",
 			url: "https://mfoxa.com.ua",
 		},
-	};
-
-	// BreadcrumbList schema
-	const breadcrumbSchema = {
-		"@context": "https://schema.org",
-		"@type": "BreadcrumbList",
-		itemListElement: [
-			{
-				"@type": "ListItem",
-				position: 1,
-				name: "Главная",
-				item: "https://mfoxa.com.ua",
-			},
-			{
-				"@type": "ListItem",
-				position: 2,
-				name: "МФО",
-				item: "https://mfoxa.com.ua/mfo",
-			},
-			{
-				"@type": "ListItem",
-				position: 3,
-				name: data.name || "Компания",
-				item: `https://mfoxa.com.ua/mfo/${company}`,
-			},
-		],
 	};
 
 	// Organization schema for the MFO company
@@ -91,6 +63,7 @@ export const MicrodataCompany = ({
 			"@type": "OfferCatalog",
 			name: `Тарифы ${data.name}`,
 			itemListElement:
+				// eslint-disable-next-line
 				data.tariffs?.map((tariff: any, index: number) => ({
 					"@type": "Offer",
 					name: tariff.name || `Тариф ${index + 1}`,
@@ -131,45 +104,20 @@ export const MicrodataCompany = ({
 		},
 	};
 
-	// FAQPage schema if FAQs exist
-	const faqSchema =
-		data.faqs && data.faqs.length > 0
-			? {
-					"@context": "https://schema.org",
-					"@type": "FAQPage",
-					mainEntity: data.faqs.map((faq: any) => ({
-						"@type": "Question",
-						name: faq.question,
-						acceptedAnswer: {
-							"@type": "Answer",
-							text: faq.answer,
-						},
-					})),
-			  }
-			: null;
-
-	// Combine all schemas
 	const allSchemas: object[] = [
 		webPageSchema,
-		breadcrumbSchema,
 		organizationSchema,
 		loanSchema,
 	];
 
-	// Add FAQ schema if available
-	if (faqSchema) {
-		allSchemas.push(faqSchema);
-	}
-
 	return (
 		<>
 			{allSchemas.map((schema, index) => (
-				<Script
+				<script
 					key={index}
-					id={`company-schema-${index}`}
 					type="application/ld+json"
 					dangerouslySetInnerHTML={{
-						__html: JSON.stringify(schema, null, 2),
+						__html: JSON.stringify(schema),
 					}}
 				/>
 			))}

@@ -1,10 +1,7 @@
-// app/structured-data/MfoPageStructuredData.tsx
-import Script from "next/script";
 import { getTranslations } from "next-intl/server";
 import { MfoDetails } from "@/app/services/getMfoDetailsService";
 import { PageDatesResponse } from "@/app/services/PageDatesService";
 import { AuthorRandomResponse } from "@/app/services/authorsService";
-import { FaqsResponse } from "@/app/services/FaqService";
 import { SettingsGroupResponse } from "@/app/services/settingsService";
 import { getValidRatingOrCount } from "../lib/utils";
 
@@ -13,7 +10,6 @@ type MfoPageStructuredDataProps = {
 	data: MfoDetails[];
 	dates: PageDatesResponse;
 	randomAuthor: AuthorRandomResponse;
-	faqs: FaqsResponse;
 	getAllSettings: SettingsGroupResponse | undefined;
 };
 
@@ -22,7 +18,6 @@ export const MfoPageStructuredData = async ({
 	data,
 	dates,
 	randomAuthor,
-	faqs,
 	getAllSettings,
 }: MfoPageStructuredDataProps) => {
 	const t = await getTranslations({ locale: lang, namespace: "Metadata" });
@@ -77,26 +72,6 @@ export const MfoPageStructuredData = async ({
 		},
 	};
 
-	// BreadcrumbList schema
-	const breadcrumbSchema = {
-		"@context": "https://schema.org",
-		"@type": "BreadcrumbList",
-		itemListElement: [
-			{
-				"@type": "ListItem",
-				position: 1,
-				name: "Главная",
-				item: "https://mfoxa.com.ua",
-			},
-			{
-				"@type": "ListItem",
-				position: 2,
-				name: lang === "ru" ? "МФО" : "МФО",
-				item: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/mfo`,
-			},
-		],
-	};
-
 	// ItemList schema for MFO ranking
 	const itemListSchema = {
 		"@context": "https://schema.org",
@@ -141,23 +116,6 @@ export const MfoPageStructuredData = async ({
 		})),
 	};
 
-	// FAQPage schema
-	const faqSchema =
-		faqs && faqs.length > 0
-			? {
-					"@context": "https://schema.org",
-					"@type": "FAQPage",
-					mainEntity: faqs.map((faq) => ({
-						"@type": "Question",
-						name: faq.question,
-						acceptedAnswer: {
-							"@type": "Answer",
-							text: faq.answer,
-						},
-					})),
-			  }
-			: null;
-
 	// Review schema for page rating
 	const reviewSchema = {
 		"@context": "https://schema.org",
@@ -180,27 +138,16 @@ export const MfoPageStructuredData = async ({
 	};
 
 	// Combine all schemas
-	const allSchemas: object[] = [
-		webPageSchema,
-		breadcrumbSchema,
-		itemListSchema,
-		reviewSchema,
-	];
-
-	// Add FAQ schema if available
-	if (faqSchema) {
-		allSchemas.push(faqSchema);
-	}
+	const allSchemas: object[] = [webPageSchema, itemListSchema, reviewSchema];
 
 	return (
 		<>
 			{allSchemas.map((schema, index) => (
-				<Script
+				<script
 					key={index}
-					id={`mfo-page-schema-${index}`}
 					type="application/ld+json"
 					dangerouslySetInnerHTML={{
-						__html: JSON.stringify(schema, null, 2),
+						__html: JSON.stringify(schema),
 					}}
 				/>
 			))}

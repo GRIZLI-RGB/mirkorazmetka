@@ -84,10 +84,7 @@ export default async function ReviewsPageWrapper({
 		<>
 			<ReviewsStructuredData
 				lang={lang as "ru" | "ua"}
-				stats={stats}
 				dates={dates}
-				randomAuthor={randomAuthor}
-				faqs={faqs}
 				getAllSettings={getAllSettings}
 			/>
 			<ReviewsClient

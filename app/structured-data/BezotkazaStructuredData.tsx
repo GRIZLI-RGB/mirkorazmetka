@@ -1,5 +1,3 @@
-// app/structured-data/BezotkazaStructuredData.tsx
-import Script from "next/script";
 import { MfoDetails } from "@/app/services/getMfoDetailsService";
 import { CatalogPageFull } from "@/app/services/catalogService";
 import { PageDatesResponse } from "@/app/services/PageDatesService";
@@ -69,28 +67,6 @@ export const BezotkazaStructuredData = ({
 		},
 	};
 
-	// BreadcrumbList schema
-	const breadcrumbSchema = {
-		"@context": "https://schema.org",
-		"@type": "BreadcrumbList",
-		itemListElement: [
-			{
-				"@type": "ListItem",
-				position: 1,
-				name: "Главная",
-				item: "https://mfoxa.com.ua",
-			},
-			{
-				"@type": "ListItem",
-				position: 2,
-				name: page.h1_title || "Безотказные займы",
-				item: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/${
-					page.slug
-				}`,
-			},
-		],
-	};
-
 	// ItemList schema for MFO ranking
 	const itemListSchema = {
 		"@context": "https://schema.org",
@@ -140,23 +116,6 @@ export const BezotkazaStructuredData = ({
 		}),
 	};
 
-	// FAQPage schema if FAQs exist
-	const faqSchema =
-		page.faqs && page.faqs.length > 0
-			? {
-					"@context": "https://schema.org",
-					"@type": "FAQPage",
-					mainEntity: page.faqs.map((faq) => ({
-						"@type": "Question",
-						name: faq.question,
-						acceptedAnswer: {
-							"@type": "Answer",
-							text: faq.answer,
-						},
-					})),
-			  }
-			: null;
-
 	// Review schema for page rating
 	const reviewSchema = {
 		"@context": "https://schema.org",
@@ -177,28 +136,16 @@ export const BezotkazaStructuredData = ({
 		},
 	};
 
-	// Combine all schemas
-	const allSchemas: object[] = [
-		webPageSchema,
-		breadcrumbSchema,
-		itemListSchema,
-		reviewSchema,
-	];
-
-	// Add FAQ schema if available
-	if (faqSchema) {
-		allSchemas.push(faqSchema);
-	}
+	const allSchemas: object[] = [webPageSchema, itemListSchema, reviewSchema];
 
 	return (
 		<>
 			{allSchemas.map((schema, index) => (
-				<Script
+				<script
 					key={index}
-					id={`bezotkaza-schema-${index}`}
 					type="application/ld+json"
 					dangerouslySetInnerHTML={{
-						__html: JSON.stringify(schema, null, 2),
+						__html: JSON.stringify(schema),
 					}}
 				/>
 			))}

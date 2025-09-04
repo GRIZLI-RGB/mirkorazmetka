@@ -1,168 +1,40 @@
-// app/structured-data/ReviewsStructuredData.tsx
-import Script from "next/script";
-import { ReviewStatisticsResponse } from "@/app/services/reviewService";
 import { PageDatesResponse } from "@/app/services/PageDatesService";
-import { AuthorRandomResponse } from "@/app/services/authorsService";
-import { FaqsResponse } from "@/app/services/FaqService";
 import { SettingsGroupResponse } from "@/app/services/settingsService";
+import { getDefaultWebPageSchema } from "./defaults";
 
 type ReviewsStructuredDataProps = {
 	lang: "ru" | "ua";
-	stats: ReviewStatisticsResponse;
 	dates: PageDatesResponse;
-	randomAuthor: AuthorRandomResponse;
-	faqs: FaqsResponse;
 	getAllSettings: SettingsGroupResponse | undefined;
 };
 
 export const ReviewsStructuredData = ({
 	lang,
-	stats,
 	dates,
-	randomAuthor,
-	faqs,
 	getAllSettings,
 }: ReviewsStructuredDataProps) => {
-	// WebPage schema
-	const webPageSchema = {
-		"@context": "https://schema.org",
-		"@type": "WebPage",
-		name:
+	const webPageSchema = getDefaultWebPageSchema({
+		lang,
+		title:
 			getAllSettings?.settings.reviews_page_title ||
-			"Отзывы об МФО Украины",
+			(lang === "ua"
+				? "Відгуки про МФО України"
+				: "Отзывы об МФО Украины"),
 		description:
 			getAllSettings?.settings.reviews_page_description ||
-			"Читайте отзывы клиентов о микрофинансовых организациях Украины",
-		url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/reviews`,
-		datePublished: dates.date_published,
-		dateModified: dates.date_modified,
-		author: {
-			"@type": "Person",
-			name: randomAuthor?.data?.name || "Эксперт MFoxa",
-		},
-		publisher: {
-			"@type": "Organization",
-			name: "MFoxa",
-			url: "https://mfoxa.com.ua",
-		},
-	};
-
-	// ItemList schema for reviews statistics
-	const itemListSchema = {
-		"@context": "https://schema.org",
-		"@type": "ItemList",
-		name: "Статистика отзывов МФО Украины",
-		description: `Общая статистика: ${stats.total_mfos} компаний, ${stats.total_reviews} отзывов`,
-		itemListElement: [
-			{
-				"@type": "ListItem",
-				position: 1,
-				name: "Количество компаний МФО",
-				item: {
-					"@type": "QuantitativeValue",
-					value: stats.total_mfos,
-					unitText: "компаний",
-				},
-			},
-			{
-				"@type": "ListItem",
-				position: 2,
-				name: "Общее количество отзывов",
-				item: {
-					"@type": "QuantitativeValue",
-					value: stats.total_reviews,
-					unitText: "отзывов",
-				},
-			},
-		],
-	};
-
-	// FAQPage schema if FAQs exist
-	const faqSchema =
-		faqs && faqs.length > 0
-			? {
-					"@context": "https://schema.org",
-					"@type": "FAQPage",
-					mainEntity: faqs.map((faq) => ({
-						"@type": "Question",
-						name: faq.question,
-						acceptedAnswer: {
-							"@type": "Answer",
-							text: faq.answer,
-						},
-					})),
-			  }
-			: null;
-
-	// Review schema for page rating
-	const reviewSchema = {
-		"@context": "https://schema.org",
-		"@type": "Review",
-		author: {
-			"@type": "Person",
-			name: randomAuthor?.data?.name || "Эксперт MFoxa",
-		},
-		reviewRating: {
-			"@type": "Rating",
-			ratingValue: "5",
-			bestRating: "5",
-			worstRating: "1",
-		},
-		itemReviewed: {
-			"@type": "Organization",
-			name:
-				getAllSettings?.settings.reviews_page_title ||
-				"Отзывы об МФО Украины",
-			url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/reviews`,
-		},
-		reviewBody: `Обзор страницы ${
-			getAllSettings?.settings.reviews_page_title ||
-			"Отзывы об МФО Украины"
-		} от эксперта ${randomAuthor?.data?.name || "MFoxa"}`,
-		datePublished: dates.date_published,
-	};
-
-	// AggregateRating schema for overall reviews
-	const aggregateRatingSchema = {
-		"@context": "https://schema.org",
-		"@type": "AggregateRating",
-		itemReviewed: {
-			"@type": "Organization",
-			name: "Отзывы об МФО Украины",
-			url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/reviews`,
-		},
-		ratingCount: String(+stats.total_reviews || 1),
-		ratingValue: "4.5",
-		bestRating: "5",
-		worstRating: "1",
-	};
-
-	// Combine all schemas
-	const allSchemas: object[] = [
-		webPageSchema,
-		// breadcrumbSchema,
-		itemListSchema,
-		reviewSchema,
-		aggregateRatingSchema,
-	];
-
-	// Add FAQ schema if available
-	if (faqSchema) {
-		allSchemas.push(faqSchema);
-	}
+			(lang === "ua"
+				? "Читайте відгуки клієнтів про мікрофінансові організації України"
+				: "Читайте отзывы клиентов о микрофинансовых организациях Украины"),
+		path: "/reviews",
+		dates,
+	});
 
 	return (
-		<>
-			{allSchemas.map((schema, index) => (
-				<Script
-					key={index}
-					id={`reviews-schema-${index}`}
-					type="application/ld+json"
-					dangerouslySetInnerHTML={{
-						__html: JSON.stringify(schema, null, 2),
-					}}
-				/>
-			))}
-		</>
+		<script
+			type="application/ld+json"
+			dangerouslySetInnerHTML={{
+				__html: JSON.stringify(webPageSchema),
+			}}
+		/>
 	);
 };

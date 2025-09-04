@@ -90,7 +90,6 @@ export default async function LoanPageWrapper({
         data={data}
         dates={dates}
         randomAuthor={randomAuthor}
-        faqs={faqs}
         getAllSettings={getAllSettings}
       />
       <MicrodataLoanCatalog data={data} locale={lang as "ua" | "ru"} />
