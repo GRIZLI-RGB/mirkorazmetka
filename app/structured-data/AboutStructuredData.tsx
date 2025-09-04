@@ -28,7 +28,6 @@ export const AboutStructuredData = ({
 		dates,
 	});
 
-	// Person schemas for each team member
 	const personSchemas = authors.map((author) => ({
 		"@context": "https://schema.org",
 		"@type": "Person",
@@ -62,7 +61,7 @@ export const AboutStructuredData = ({
 					key={index}
 					type="application/ld+json"
 					dangerouslySetInnerHTML={{
-						__html: JSON.stringify(schema, null, 2),
+						__html: JSON.stringify(schema),
 					}}
 				/>
 			))}
