@@ -1,5 +1,24 @@
 import { LangType } from "../services/HomeService";
 
+export const calculateWilsonRating = (
+	rating: number,
+	count: number
+): number => {
+	if (count === 0) return rating;
+
+	const z = 1.96;
+	const p = rating / 5;
+	const n = count;
+
+	const numerator =
+		p +
+		(z * z) / (2 * n) -
+		z * Math.sqrt((p * (1 - p) + (z * z) / (4 * n)) / n);
+	const denominator = 1 + (z * z) / n;
+
+	return Math.max(0, Math.min(5, (numerator / denominator) * 5));
+};
+
 export const knowsAboutByLang = {
 	ru: ["Микрофинансирование", "Финансовые услуги", "Кредитование"],
 	ua: ["Мікрофінансування", "Фінансові послуги", "Кредитування"],

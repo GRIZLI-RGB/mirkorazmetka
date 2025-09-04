@@ -97,7 +97,6 @@ export default async function MfoPage({
 				lang={lang as "ru" | "ua"}
 				data={data}
 				dates={dates}
-				randomAuthor={randomAuthor}
 				getAllSettings={getAllSettings}
 			/>
 			<MfoPageClient
