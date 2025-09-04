@@ -46,15 +46,17 @@ export const MfoPageStructuredData = async ({
 		itemListElement: uniqueMFOs.map((mfo, index) => ({
 			"@type": "ListItem",
 			position: index + 1,
+			name: mfo?.name?.trim() || `MFO ${index + 1}`,
 			url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/mfo/${
 				mfo.slug
 			}`,
 			item: {
 				"@type": "Organization",
-				name: mfo?.name?.trim() || `MFO ${index + 1}`,
-				...(mfo.redirect_url || mfo.official_website
-					? { url: mfo.redirect_url || mfo.official_website }
-					: {}),
+				// name: mfo?.name?.trim() || `MFO ${index + 1}`,
+				// url:
+				// 	mfo.redirect_url ||
+				// 	mfo.official_website ||
+				// 	`https://mfoxa.com.ua/mfo/${mfo.slug}`,
 				logo: mfo.logo_url,
 				aggregateRating: {
 					"@type": "AggregateRating",
