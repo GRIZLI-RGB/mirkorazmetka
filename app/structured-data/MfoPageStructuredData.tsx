@@ -43,29 +43,28 @@ export const MfoPageStructuredData = async ({
 		description:
 			getAllSettings?.settings.mfo_page_description ||
 			"Лучшие микрофинансовые организации по отзывам клиентов",
-		itemListElement: uniqueMFOs.map((mfo, index) => ({
-			"@type": "ListItem",
-			position: index + 1,
-			name: mfo?.name?.trim() || `MFO ${index + 1}`,
-			url: `https://mfoxa.com.ua${lang === "ru" ? "/ru" : ""}/mfo/${
-				mfo.slug
-			}`,
-			item: {
-				"@type": "Organization",
-				url:
-					mfo.redirect_url ||
-					mfo.official_website ||
-					`https://mfoxa.com.ua/mfo/${mfo.slug}`,
-				logo: mfo.logo_url,
-				aggregateRating: {
-					"@type": "AggregateRating",
-					ratingValue: Number(mfo?.rating_average) || 5,
-					bestRating: 5,
-					worstRating: 1,
-					ratingCount: Number(mfo?.rating_count) || 1,
+		itemListOrder: "https://schema.org/ItemListOrderDescending",
+		itemListElement: uniqueMFOs
+			.filter((mfo) => mfo.name?.trim())
+			.map((mfo, index) => ({
+				"@type": "ListItem",
+				position: index + 1,
+				item: {
+					"@type": "Organization",
+					url:
+						mfo.redirect_url ||
+						mfo.official_website ||
+						`https://mfoxa.com.ua/mfo/${mfo.slug}`,
+					logo: mfo.logo_url,
+					aggregateRating: {
+						"@type": "AggregateRating",
+						ratingValue: Number(mfo?.rating_average) || 5,
+						bestRating: 5,
+						worstRating: 1,
+						ratingCount: Number(mfo?.rating_count) || 1,
+					},
 				},
-			},
-		})),
+			})),
 	};
 
 	const allSchemas: object[] = [webPageSchema, itemListSchema];
