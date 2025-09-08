@@ -76,6 +76,7 @@ const CreditsList: React.FC<CreditsListProps> = ({
 						| "rate_asc"
 						| "rate_desc",
 				});
+        console.log(data)
 				setCredits(data);
 			} catch (error) {
 				console.error("Ошибка загрузки кредитов:", error);

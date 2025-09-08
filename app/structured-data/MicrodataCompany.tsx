@@ -1,7 +1,7 @@
 import { MfoDetails } from "@/app/services/getMfoDetailsService";
 import { PageDatesResponse } from "@/app/services/PageDatesService";
 import { LangType } from "../services/HomeService";
-import { emptyAddress, getDefaultWebPageSchema } from "./defaults";
+import { getDefaultWebPageSchema } from "./defaults";
 
 type MicrodataCompanyProps = {
 	company: string;
@@ -44,9 +44,9 @@ export const MicrodataCompany = ({
 			areaServed: "UA",
 			availableLanguage: ["Ukrainian", "Russian"],
 		},
-		address: emptyAddress,
+		// address: emptyAddress,
 		priceRange: "$$",
-		telephone: "-",
+		// telephone: "-",
 		image: `https://mfoxa.com.ua/logo.png`,
 		aggregateRating: {
 			"@type": "AggregateRating",
@@ -79,9 +79,9 @@ export const MicrodataCompany = ({
 		provider: {
 			"@type": "FinancialService",
 			name: data.name,
-			address: emptyAddress,
+			// address: emptyAddress,
 			priceRange: "$$",
-			telephone: "-",
+			// telephone: "-",
 			image: `https://mfoxa.com.ua/logo.png`,
 		},
 		loanTerm: {

@@ -2,8 +2,6 @@
 
 import React from "react";
 
-import { emptyAddress } from "./defaults";
-
 type OfferType = {
 	name: string;
 	url: string;
@@ -100,10 +98,10 @@ export const LoanSlugStructuredData: React.FC<LoanSlugStructuredDataProps> = ({
 							? loan.review_count
 							: 1,
 				},
-				address: emptyAddress,
+				// address: emptyAddress,
 				priceRange: "$$",
 				image: loan?.logo_url || "https://mfoxa.com.ua/logo.png",
-				telephone: "-",
+				// telephone: "-",
 			},
 		})),
 	};

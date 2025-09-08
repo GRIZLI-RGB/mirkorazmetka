@@ -34,7 +34,7 @@ const CreditsListStructuredData: React.FC<Props> = ({
 					ratingValue: credit?.rating_average
 						? credit.rating_average
 						: 5,
-					reviewCount: credit.rating_count ?? 1,
+					reviewCount: +credit.rating_count || 1,
 				},
 				provider: {
 					"@type": "Organization",
@@ -82,6 +82,7 @@ const CreditsListStructuredData: React.FC<Props> = ({
 						},
 					},
 				})),
+				priceRange: "$$",
 			},
 		})),
 	};

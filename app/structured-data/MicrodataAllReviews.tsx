@@ -1,6 +1,4 @@
 import { useTranslations } from "next-intl";
-import { emptyAddress } from "./defaults";
-
 type Review = {
 	id: number;
 	mfo: { name: string; logo_url: string; slug: string };
@@ -55,9 +53,9 @@ export const MicrodataAllReviews = ({
 					name: review.mfo.name,
 					url: `https://mfoxa.com.ua/${locale}/mfo/${review.mfo.slug}`,
 					priceRange: "$$",
-					telephone: "-",
+					// telephone: "-",
 					image: review.mfo.logo_url,
-					address: emptyAddress,
+					// address: emptyAddress,
 				},
 			},
 		})),
