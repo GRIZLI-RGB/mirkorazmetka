@@ -31,7 +31,7 @@ const CreditsListStructuredData: React.FC<Props> = ({
 				image: credit.logo_url,
 				aggregateRating: {
 					"@type": "AggregateRating",
-					ratingValue: credit?.rating_average
+					ratingValue: +credit.rating_average
 						? credit.rating_average
 						: 5,
 					reviewCount: +credit.rating_count || 1,
