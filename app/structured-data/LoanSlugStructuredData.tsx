@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+
 import { emptyAddress } from "./defaults";
 
 type OfferType = {

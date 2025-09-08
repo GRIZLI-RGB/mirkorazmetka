@@ -5,8 +5,8 @@ import { getPageDates } from "@/app/services/PageDatesService";
 import settingsService from "@/app/services/settingsService";
 import { getHomeData, LangType } from "@/app/services/HomeService";
 import { Metadata } from "next";
-import { LoanSlugStructuredData } from "@/app/structured-data/LoanSlugStructuredData";
 import { BezotkazaStructuredData } from "@/app/structured-data/BezotkazaStructuredData";
+// import { LoanSlugStructuredData } from "@/app/structured-data/LoanSlugStructuredData";
 
 export async function generateMetadata({
 	params,
@@ -96,7 +96,7 @@ export default async function LoanDescription({
 				dates={dates}
 				page={res.page}
 			/>
-			<LoanSlugStructuredData
+			{/* <LoanSlugStructuredData
 				pageTitle={res.page.meta_title}
 				pageUrl={`https://mfoxa.com.ua${
 					lang === "ru" ? "/ru" : ""
@@ -133,7 +133,7 @@ export default async function LoanDescription({
 						},
 					],
 				}))}
-			/>
+			/> */}
 			<CreditClientPage
 				page={res.page}
 				getAllSettings={getAllSettings}
