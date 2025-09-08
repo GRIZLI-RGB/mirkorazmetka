@@ -2,6 +2,7 @@ import { MfoDetails } from "@/app/services/getMfoDetailsService";
 import { PageDatesResponse } from "@/app/services/PageDatesService";
 import { LangType } from "../services/HomeService";
 import { getDefaultWebPageSchema } from "./defaults";
+import { getExtremeValuesByKey } from "../lib/utils";
 
 type MicrodataCompanyProps = {
 	company: string;
@@ -59,17 +60,16 @@ export const MicrodataCompany = ({
 			"@type": "OfferCatalog",
 			name: `Тарифы ${data.name}`,
 			itemListElement:
-				// eslint-disable-next-line
-				data.tariffs?.map((tariff: any, index: number) => ({
+				data.tariffs?.map((tariff, index: number) => ({
 					"@type": "Offer",
 					name: tariff.name || `Тариф ${index + 1}`,
-					description: tariff.description,
 					price: tariff.max_amount,
 					priceCurrency: "UAH",
 					availability: "https://schema.org/InStock",
 				})) || [],
 		},
 	};
+	console.log(data);
 
 	const loanSchema = {
 		"@context": "https://schema.org",
@@ -81,24 +81,29 @@ export const MicrodataCompany = ({
 			name: data.name,
 			// address: emptyAddress,
 			priceRange: "$$",
-			// telephone: "-",
+			telephone: data?.phone || "-",
 			image: `https://mfoxa.com.ua/logo.png`,
 		},
 		loanTerm: {
 			"@type": "QuantitativeValue",
-			minValue: data.tariffs?.[0]?.min_term || 1,
-			maxValue: data.tariffs?.[0]?.max_term || 30,
+			minValue:
+				getExtremeValuesByKey(data.tariffs, "min_term_days").min || 1,
+			maxValue:
+				getExtremeValuesByKey(data.tariffs, "max_term_days").max || 30,
 			unitText: "DAY",
 		},
 		amount: {
 			"@type": "MonetaryAmount",
-			minValue: data.tariffs?.[0]?.min_amount || 1000,
-			maxValue: data.tariffs?.[0]?.max_amount || 30000,
+			minValue:
+				getExtremeValuesByKey(data.tariffs, "min_amount").min || 1,
+			maxValue:
+				getExtremeValuesByKey(data.tariffs, "max_amount").max || 999999,
 			currency: "UAH",
 		},
 		interestRate: {
 			"@type": "QuantitativeValue",
-			value: data.tariffs?.[0]?.daily_rate || 1,
+			minValue: getExtremeValuesByKey(data.tariffs, "rate").min || 1,
+			maxValue: getExtremeValuesByKey(data.tariffs, "rate").max || 999,
 			unitText: "PERCENT",
 		},
 	};

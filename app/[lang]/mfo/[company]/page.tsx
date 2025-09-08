@@ -82,6 +82,7 @@ export default async function CatalogPage({ params }: PageProps) {
 		companySlug,
 		locale === "ua" ? "uk" : "ru"
 	);
+
 	const requirements = data.requirements;
 
 	const requirementsData = [
