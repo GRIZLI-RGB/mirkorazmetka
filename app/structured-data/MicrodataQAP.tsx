@@ -217,8 +217,8 @@ export const MicrodataQAP = ({ questions, dates }: MicrodataQAPProps) => {
 					? q.not_helpful_count
 					: 0,
 			answerCount: answers.length,
-			acceptedAnswer: answers[0] ?? undefined,
-			suggestedAnswer: answers.length > 1 ? answers.slice(1) : undefined,
+			// acceptedAnswer: answers[0] ?? undefined,
+			// suggestedAnswer: answers.length > 1 ? answers.slice(1) : undefined,
 		};
 
 		return questionSchema;
