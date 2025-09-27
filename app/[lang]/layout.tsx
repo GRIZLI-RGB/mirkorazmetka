@@ -4,8 +4,8 @@ import Footer from "../components/Footer";
 import { NextIntlClientProvider } from "next-intl";
 import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
-// import StructuredData from "../structured-data/StructuredData";
-// import { LangType } from "../services/HomeService";
+import StructuredData from "../structured-data/StructuredData";
+import { LangType } from "../services/HomeService";
 
 import "../globals.css";
 
@@ -83,7 +83,7 @@ export default async function Layout({
 				<Toaster position="top-right" reverseOrder={false} />
 
 				<NextIntlClientProvider locale={lang} messages={messages}>
-					{/* <StructuredData lang={lang as LangType} /> */}
+					<StructuredData lang={lang as LangType} />
 					<Header lang={lang} />
 					<div className="px-2.5 min-h-[80vh] max-w-[1440px] mx-auto md:px-[50px] lg:px-[100px] pb-5 md:pb-[40px] lg:pb-[50px] bg-[#ebebf9]">
 						{children}
