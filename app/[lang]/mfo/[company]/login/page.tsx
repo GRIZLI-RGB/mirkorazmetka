@@ -31,13 +31,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 			type: "website",
 			siteName: "MFoxa",
 		},
-		keywords: [
-			lang === "uk" ? "особистий кабінет" : "личный кабинет",
-			data.name,
-			lang === "uk" ? "вхід" : "вход",
-			lang === "uk" ? "реєстрація" : "регистрация",
-			lang === "uk" ? "сервіс" : "сервис",
-		],
 		robots: { index: true, follow: true },
 	};
 }

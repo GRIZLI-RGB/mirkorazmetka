@@ -32,13 +32,6 @@ export async function generateMetadata({
 		title: getAllSettings?.settings.mfo_page_meta_title || t("home.title"),
 		description:
 			getAllSettings?.settings.description || t("home.description"),
-		keywords: [
-			"МФО Украина",
-			"отзывы МФО",
-			"рейтинг микрофинансовых организаций",
-			"лучшие МФО",
-			"взять займ онлайн",
-		],
 		openGraph: {
 			title: t("home.title"),
 			description: t("home.description"),

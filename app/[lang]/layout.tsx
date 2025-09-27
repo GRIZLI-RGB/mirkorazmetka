@@ -1,4 +1,3 @@
-import "../globals.css";
 import { ReactNode } from "react";
 import StructuredData from "../structured-data/StructuredData";
 import Header from "../components/Header";
@@ -7,6 +6,9 @@ import { NextIntlClientProvider } from "next-intl";
 import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
 import { LangType } from "../services/HomeService";
+
+// @ts-expect-error: непонятная ошибка в импорте
+import "../globals.css";
 
 export async function generateMetadata({
 	params,
@@ -19,8 +21,6 @@ export async function generateMetadata({
 		return {
 			title: messages.Metadata.root.title,
 			description: messages.Metadata.root.description,
-			keywords:
-				"займы, кредиты, МФО, микрокредиты, деньги онлайн, Украина, быстрые займы",
 			robots: "index, follow",
 			openGraph: {
 				title: messages.Metadata.root.title,
@@ -43,6 +43,15 @@ export async function generateMetadata({
 				title: messages.Metadata.root.title,
 				description: messages.Metadata.root.description,
 				images: ["https://mfoxa.com.ua/og-image.jpg"],
+			},
+			alternates: {
+				languages: {
+					"uk-UA": "https://mfo.com/",
+					"ru-UA": "https://mfo.com/ru/",
+					"x-default": "https://mfo.com/",
+				},
+				canonical:
+					lang === "ua" ? "https://mfo.com/" : "https://mfo.com/ru/",
 			},
 		} as Metadata;
 	} catch (error) {

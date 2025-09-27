@@ -59,11 +59,6 @@ export async function generateMetadata({
 	return {
 		title,
 		description,
-		alternates: {
-			canonical: `https://mfoxa.com.ua${
-				lang === "ru" ? "/ru" : ""
-			}/mfo/${slug}`,
-		},
 		openGraph: {
 			title,
 			description,

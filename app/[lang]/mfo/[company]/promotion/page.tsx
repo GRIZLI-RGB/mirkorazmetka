@@ -41,13 +41,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
-    keywords: [
-      lang === "uk" ? "промокоди" : "промокоды",
-      companyName,
-      lang === "uk" ? "знижки" : "скидки",
-      lang === "uk" ? "акції" : "акции",
-      lang === "uk" ? "позики" : "займы",
-    ],
     robots: {
       index: true,
       follow: true,

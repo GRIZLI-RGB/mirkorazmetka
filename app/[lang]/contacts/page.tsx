@@ -37,12 +37,6 @@ export async function generateMetadata({
 				"Как связаться с финансовым маркетплейсом MFoxa",
 			url: "https://mfoxa.com.ua/contacts",
 		},
-
-		keywords: [
-			"контакты MFoxa",
-			"поддержка МФО",
-			"связаться с финансовым маркетплейсом",
-		],
 	};
 }
 

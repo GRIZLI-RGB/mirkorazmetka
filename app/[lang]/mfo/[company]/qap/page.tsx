@@ -31,14 +31,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	return {
 		title,
 		description,
-		keywords: [
-			"вопросы",
-			"FAQ",
-			companyName,
-			"займы",
-			"условия",
-			"поддержка",
-		],
 		robots: {
 			index: true,
 			follow: true,
@@ -49,10 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 			type: "website",
 			url: `https://mfoxa.com.ua/mfo/${slug}/qap`,
 			siteName: "MFoxa",
-		},
-		alternates: {
-			canonical: `https://mfoxa.com.ua/mfo/${slug}/qap`,
-		},
+		}
 	};
 }
 

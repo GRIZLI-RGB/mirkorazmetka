@@ -151,240 +151,254 @@ export default async function MfoPageClient({
 			</div>
 
 			{isMobile ? (
-				<div className=" mx-[0px] md:mx-[20px] px-[0px] md:px-[20px] mb-[20px] flex flex-wrap gap-[20px]">
-					{data.slice(0, visibleCount).map((top, i) => {
-						const place = i + 1;
+				<div className="mx-[0px] md:mx-[20px] px-[0px] md:px-[20px] mb-[20px] flex flex-wrap gap-[20px]">
+					{data
+						.sort((a, b) => +b.rating_average - +a.rating_average)
+						.slice(0, visibleCount)
+						.map((top, i) => {
+							const place = i + 1;
 
-						let medalSrc = "/Frame 170.png"; // золото по умолчанию
-						if (place === 1) medalSrc = "/Frame 163.png";
-						if (place === 2) medalSrc = "/Silver.png";
-						else if (place === 3) medalSrc = "/Bronze.png";
+							let medalSrc = "/Frame 170.png"; // золото по умолчанию
+							if (place === 1) medalSrc = "/Frame 163.png";
+							if (place === 2) medalSrc = "/Silver.png";
+							else if (place === 3) medalSrc = "/Bronze.png";
 
-						return (
-							<div
-								key={i}
-								className="w-full rounded-[20px] bg-white p-[10px] md:p-[16px] shadow-md"
-							>
-								<header className="flex gap-[10px] items-center mb-[10px]">
-									<Image
-										src={top.logo_url}
-										alt={top.name}
-										width={89}
-										height={50}
-										className="object-contain"
-									/>
-									<p className="text-[#222] font-bold text-[16px]">
-										{top.name}
-									</p>
-								</header>
-								<div className="flex items-center gap-[10px]">
-									<div className="relative w-[74px] h-[74px]">
+							return (
+								<div
+									key={i}
+									className="w-full rounded-[20px] bg-white p-[10px] md:p-[16px] shadow-md"
+								>
+									<header className="flex gap-[10px] items-center mb-[10px]">
 										<Image
-											src={medalSrc}
-											alt={`rating-place-${place}`}
-											width={74}
-											height={74}
-											className="object-contain w-[74px] h-[74px] flex-shrink-0 min-w-[74px] min-h-[74px]"
+											src={top.logo_url}
+											alt={top.name}
+											width={89}
+											height={50}
+											className="object-contain"
 										/>
-
-										{/* Контент поверх PNG */}
-										<div className="absolute inset-1 mt-2 md:mt-3 flex flex-col items-center justify-center">
-											<span
-												style={{
-													color: getColor(
-														top?.rating_average
-													),
-												}}
-												className="text-[20px] font-bold leading-none"
-											>
-												{formatRating(
-													String(top?.rating_average)
-												)}
-											</span>
-											<span className="text-black text-[10px] font-bold">
-												{place} место
-											</span>
-										</div>
-									</div>
-									<div className="grid grid-cols-2 gap-[16px]">
-										{Object.entries(top.ratings).map(
-											([key, rating], index) => (
-												<div
-													key={index}
-													className="flex gap-[10px] items-center"
-													aria-label={`${ratingsT(
-														key
-													)}: ${rating.value}`}
-												>
-													<CircleRating
-														value={rating.value}
-														color={getColor(
-															rating.value
-														)}
-													/>{" "}
-													<div>
-														<p className="text-[11px] font-medium text-[#222]">
-															{rating.label ??
-																ratingsT(key)}
-														</p>
-													</div>
-												</div>
-											)
-										)}
-									</div>
-								</div>
-								<ButtonGreenBorder
-									link={`${localePrefix(locale)}/mfo/${
-										top.slug
-									}`}
-									className="mt-[20px]"
-									width="100%"
-									text={mfo("details")}
-								/>
-							</div>
-						);
-					})}
-				</div>
-			) : (
-				<div className=" mx-[0px] md:mx-[20px] p-[10px] md:p-[30px] mb-[50px] bg-white rounded-lg mx-0md:mx-[20px] mt-[30px]">
-					{data.slice(0, visibleCount).map((top, i) => {
-						const place = i + 1;
-
-						let medalSrc = "/Frame 171.png";
-						if (place === 1) medalSrc = "/Frame%20166%20(1).svg";
-						if (place === 2) medalSrc = "/Frame 167.svg";
-						else if (place === 3) medalSrc = "/Frame 169.svg";
-
-						return (
-							<React.Fragment key={i}>
-								<div className="flex flex-col md:flex-row md:items-center justify-between gap-[20px]">
-									<div className="flex gap-[10px] sm:gap-[20px] items-center">
-										<div className="relative w-[150px] md:w-[210px]">
+										<p className="text-[#222] font-bold text-[16px]">
+											{top.name}
+										</p>
+									</header>
+									<div className="flex items-center gap-[10px]">
+										<div className="relative w-[74px] h-[74px]">
 											<Image
 												src={medalSrc}
 												alt={`rating-place-${place}`}
 												width={74}
 												height={74}
-												className="w-[150px] md:w-[210px] h-[120px] lg:h-[80px]"
+												className="object-contain w-[74px] h-[74px] flex-shrink-0 min-w-[74px] min-h-[74px]"
 											/>
 
 											{/* Контент поверх PNG */}
-											<div className="absolute inset-1 mt-3 gap-2 flex items-center justify-center lg:flex-row flex-col">
+											<div className="absolute inset-1 mt-2 md:mt-3 flex flex-col items-center justify-center">
+												<span
+													style={{
+														color: getColor(
+															top?.rating_average
+														),
+													}}
+													className="text-[20px] font-bold leading-none"
+												>
+													{formatRating(
+														String(
+															top?.rating_average
+														)
+													)}
+												</span>
+												<span className="text-black text-[10px] font-bold">
+													{place} место
+												</span>
+											</div>
+										</div>
+										<div className="grid grid-cols-2 gap-[16px]">
+											{Object.entries(top.ratings).map(
+												([key, rating], index) => (
+													<div
+														key={index}
+														className="flex gap-[10px] items-center"
+														aria-label={`${ratingsT(
+															key
+														)}: ${rating.value}`}
+													>
+														<CircleRating
+															value={rating.value}
+															color={getColor(
+																rating.value
+															)}
+														/>{" "}
+														<div>
+															<p className="text-[11px] font-medium text-[#222]">
+																{rating.label ??
+																	ratingsT(
+																		key
+																	)}
+															</p>
+														</div>
+													</div>
+												)
+											)}
+										</div>
+									</div>
+									<ButtonGreenBorder
+										link={`${localePrefix(locale)}/mfo/${
+											top.slug
+										}`}
+										className="mt-[20px]"
+										width="100%"
+										text={mfo("details")}
+									/>
+								</div>
+							);
+						})}
+				</div>
+			) : (
+				<div className=" mx-[0px] md:mx-[20px] p-[10px] md:p-[30px] mb-[50px] bg-white rounded-lg mx-0md:mx-[20px] mt-[30px]">
+					{data
+						.sort((a, b) => +b.rating_average - +a.rating_average)
+						.slice(0, visibleCount)
+						.map((top, i) => {
+							const place = i + 1;
+
+							let medalSrc = "/Frame 171.png";
+							if (place === 1)
+								medalSrc = "/Frame%20166%20(1).svg";
+							if (place === 2) medalSrc = "/Frame 167.svg";
+							else if (place === 3) medalSrc = "/Frame 169.svg";
+
+							return (
+								<React.Fragment key={i}>
+									<div className="flex flex-col md:flex-row md:items-center justify-between gap-[20px]">
+										<div className="flex gap-[10px] sm:gap-[20px] items-center">
+											<div className="relative w-[150px] md:w-[210px]">
 												<Image
-													src={top.logo_url}
+													src={medalSrc}
 													alt={`rating-place-${place}`}
 													width={74}
 													height={74}
-													className="object-contain !w-[60px] md:!w-[70px]"
+													className="w-[150px] md:w-[210px] h-[120px] lg:h-[80px]"
 												/>
-												<div className="flex flex-col justify-center items-center">
-													<span
-														style={{
-															color: getColor(
-																top?.rating_average
-															),
-														}}
-														className="gap-1 text-[15px] font-bold leading-none"
-													>
-														{formatRating(
-															String(
-																top?.rating_average
-															)
-														)}
-													</span>
-													<span className="text-black text-[10px] font-bold">
-														{place} место
-													</span>
+
+												{/* Контент поверх PNG */}
+												<div className="absolute inset-1 mt-3 gap-2 flex items-center justify-center lg:flex-row flex-col">
+													<Image
+														src={top.logo_url}
+														alt={`rating-place-${place}`}
+														width={74}
+														height={74}
+														className="object-contain !w-[60px] md:!w-[70px]"
+													/>
+													<div className="flex flex-col justify-center items-center">
+														<span
+															style={{
+																color: getColor(
+																	top?.rating_average
+																),
+															}}
+															className="gap-1 text-[15px] font-bold leading-none"
+														>
+															{formatRating(
+																String(
+																	top?.rating_average
+																)
+															)}
+														</span>
+														<span className="text-black text-[10px] font-bold">
+															{place} место
+														</span>
+													</div>
+												</div>
+											</div>
+											<div className="flex flex-col gap-[8px]">
+												<p className="font-medium text-[15px] leading-[133%] text-[#222]">
+													{mfo("ratingsTitle", {
+														name: top.name,
+													})}
+												</p>
+												<div className="grid lg:grid-cols-4 grid-cols-2 gap-[10px] md:gap-[16px] text-black text-sm">
+													{Object.entries(
+														top.ratings
+													).map(
+														(
+															[key, rating],
+															index
+														) => (
+															<div
+																key={index}
+																className="flex items-center gap-[10px]"
+																aria-label={`${ratingsT(
+																	key
+																)}: ${
+																	rating.value
+																}`}
+															>
+																<CircleRating
+																	value={
+																		rating.value
+																	}
+																	color={getColor(
+																		rating.value
+																	)}
+																/>
+																<div className="flex flex-col">
+																	<span
+																		style={{
+																			fontFamily:
+																				"var(--Montserrat)",
+																			fontWeight: 500,
+																			fontSize:
+																				"11px",
+																			lineHeight:
+																				"145%",
+																			color: "#222",
+																		}}
+																	>
+																		{rating.label ??
+																			ratingsT(
+																				key
+																			)}
+																	</span>
+																	<p
+																		style={{
+																			fontFamily:
+																				"var(--Montserrat)",
+																			fontWeight: 500,
+																			fontSize:
+																				"11px",
+																			lineHeight:
+																				"145%",
+																			color: "#9393a3",
+																		}}
+																	>
+																		{mfo(
+																			"rank",
+																			{
+																				rank: rating.position,
+																			}
+																		)}
+																	</p>
+																</div>
+															</div>
+														)
+													)}
 												</div>
 											</div>
 										</div>
-										<div className="flex flex-col gap-[8px]">
-											<p className="font-medium text-[15px] leading-[133%] text-[#222]">
-												{mfo("ratingsTitle", {
-													name: top.name,
-												})}
-											</p>
-											<div className="grid lg:grid-cols-4 grid-cols-2 gap-[10px] md:gap-[16px] text-black text-sm">
-												{Object.entries(
-													top.ratings
-												).map(
-													([key, rating], index) => (
-														<div
-															key={index}
-															className="flex items-center gap-[10px]"
-															aria-label={`${ratingsT(
-																key
-															)}: ${
-																rating.value
-															}`}
-														>
-															<CircleRating
-																value={
-																	rating.value
-																}
-																color={getColor(
-																	rating.value
-																)}
-															/>
-															<div className="flex flex-col">
-																<span
-																	style={{
-																		fontFamily:
-																			"var(--Montserrat)",
-																		fontWeight: 500,
-																		fontSize:
-																			"11px",
-																		lineHeight:
-																			"145%",
-																		color: "#222",
-																	}}
-																>
-																	{rating.label ??
-																		ratingsT(
-																			key
-																		)}
-																</span>
-																<p
-																	style={{
-																		fontFamily:
-																			"var(--Montserrat)",
-																		fontWeight: 500,
-																		fontSize:
-																			"11px",
-																		lineHeight:
-																			"145%",
-																		color: "#9393a3",
-																	}}
-																>
-																	{mfo(
-																		"rank",
-																		{
-																			rank: rating.position,
-																		}
-																	)}
-																</p>
-															</div>
-														</div>
-													)
-												)}
-											</div>
+										<div className="w-full md:w-1/5 lg:w-1/7">
+											<ButtonGreenBorder
+												link={`${localePrefix(
+													locale
+												)}/mfo/${top.slug}`}
+												className="mt-[20px]"
+												width="100%"
+												text={mfo("details")}
+											/>
 										</div>
 									</div>
-									<div className="w-full md:w-1/5 lg:w-1/7">
-										<ButtonGreenBorder
-											link={`${localePrefix(
-												locale
-											)}/mfo/${top.slug}`}
-											className="mt-[20px]"
-											width="100%"
-											text={mfo("details")}
-										/>
-									</div>
-								</div>
-								<hr className="mt-[14px] mb-[20px]" />
-							</React.Fragment>
-						);
-					})}
+									<hr className="mt-[14px] mb-[20px]" />
+								</React.Fragment>
+							);
+						})}
 				</div>
 			)}
 
@@ -407,12 +421,6 @@ export default async function MfoPageClient({
 				<OftenQuestions />
 			)}
 			<InfoHelpful randomAuthor={randomAuthor} locale={locale} />
-			{/* <PageReview
-				author={randomAuthor}
-				pageName={
-					getAllSettings?.settings.mfo_page_title || "Рейтинг МФО"
-				}
-			/> */}
 			<Questions />
 			<div className="px-0 md:px-[20px]">
 				<p

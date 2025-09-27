@@ -34,13 +34,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	return {
 		title,
 		description,
-		keywords: [
-			lang === "ua" ? "відгуки" : "отзывы",
-			"МФО",
-			companyName,
-			lang === "ua" ? "рейтинг" : "рейтинг",
-			lang === "ua" ? "позики" : "займы",
-		],
 		openGraph: {
 			title,
 			description,
@@ -50,12 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 			siteName: "MFoxa",
 			type: "website",
 			images: [`https://mfoxa.com.ua/og-${slug}-reviews.jpg`],
-		},
-		alternates: {
-			canonical: `https://mfoxa.com.ua${
-				lang === "ru" ? "/ru" : ""
-			}/mfo/${slug}/reviews`,
-		},
+		}
 	};
 }
 

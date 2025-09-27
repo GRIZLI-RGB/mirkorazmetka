@@ -24,13 +24,6 @@ export async function generateMetadata({
 	return {
 		title: res.page.meta_title,
 		description: res.page.meta_description,
-		keywords: [
-			lang === "uk" ? "позики онлайн" : "займы онлайн",
-			"микрозайм",
-			"МФО Украина",
-			lang === "uk" ? "взяти позику" : "взять займ",
-			"быстрые займы",
-		],
 		openGraph: {
 			title: res.page.meta_title,
 			description: res.page.meta_description,

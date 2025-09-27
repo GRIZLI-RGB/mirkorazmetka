@@ -35,12 +35,6 @@ export async function generateMetadata({
 			getAllSettings?.settings.reviews_page_meta_description ||
 			t("reviewss.description") ||
 			"Читайте отзывы клиентов о микрофинансовых организациях Украины. Реальный опыт, оценки и советы от заемщиков.",
-		keywords: [
-			"отзывы МФО",
-			"МФО Украина",
-			"займы онлайн",
-			"мнение клиентов",
-		],
 		openGraph: {
 			title: t("reviewss.title") || "Отзывы об МФО Украины",
 			description:

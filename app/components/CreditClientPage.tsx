@@ -118,7 +118,7 @@ const CreditClientPage: React.FC<CreditClientPageProps> = ({
       ) : (
         <OftenQuestions />
       )}
-      <InfoHelpfulClient randomAuthor={randomAuthor} />
+      <InfoHelpfulClient locale={locale} randomAuthor={randomAuthor} />
 
       <Questions />
       <div className="px-0 md:px-[20px]">

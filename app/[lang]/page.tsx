@@ -29,13 +29,6 @@ export async function generateMetadata({
 		description:
 			getAllSettingsMeta.settings.main_page_meta_description ||
 			t("home.description"),
-		keywords: [
-			"займы онлайн",
-			"МФО Украина",
-			"рейтинг микрофинансовых организаций",
-			"срочные займы",
-			"деньги в долг",
-		],
 		openGraph: {
 			title: t("home.title"),
 			description: t("home.description"),
@@ -48,10 +41,7 @@ export async function generateMetadata({
 					alt: t("home.title"),
 				},
 			],
-		},
-		alternates: {
-			canonical: "https://mfoxa.com.ua",
-		},
+		}
 	};
 }
 
