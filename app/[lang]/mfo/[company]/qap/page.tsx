@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 			type: "website",
 			url: `https://mfoxa.com.ua/mfo/${slug}/qap`,
 			siteName: "MFoxa",
-		}
+		},
 	};
 }
 
@@ -60,12 +60,14 @@ export default async function Qap({ params }: Props) {
 	});
 	const mfoData = await getMfoDetails(slug, lang === "ua" ? "uk" : "ru");
 
+	console.log(questions.data);
+
 	return (
 		<>
 			<MicrodataQAP
 				questions={questions.data}
 				locale={lang as "ua" | "ru"}
-        dates={dates}
+				dates={dates}
 			/>
 			<QapClient
 				company={company}
