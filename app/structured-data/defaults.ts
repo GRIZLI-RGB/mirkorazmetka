@@ -67,10 +67,10 @@ export const getDefaultWebPageSchema = ({
 	datePublished: dates.date_published,
 	dateModified: dates.date_modified,
 	inLanguage: lang === "ua" ? "uk-UA" : "ru-UA",
-	// isPartOf: {
-	// 	"@type": "WebSite",
-	// 	url: "https://mfoxa.com.ua",
-	// },
+	isPartOf: {
+		"@type": "WebSite",
+		url: "https://mfoxa.com.ua",
+	},
 	publisher: {
 		"@type": "Organization",
 		name: "MFoxa",
