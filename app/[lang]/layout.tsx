@@ -7,7 +7,6 @@ import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
 import { LangType } from "../services/HomeService";
 
-// @ts-expect-error: непонятная ошибка в импорте
 import "../globals.css";
 
 export async function generateMetadata({
