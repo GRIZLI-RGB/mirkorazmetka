@@ -78,13 +78,13 @@ export default function CompanyRewiwsClient({
 	dates,
 	lang,
 	mfoData,
-	initialReviews
+	initialReviews,
 }: {
 	slug: string;
 	dates?: PageDatesResponse | null;
 	lang: string;
-	mfoData: MfoDetails; 
-	initialReviews: ReviewsApiResponse
+	mfoData: MfoDetails;
+	initialReviews: ReviewsApiResponse;
 }) {
 	const t = useTranslations("Reviews");
 	const [isModalOpen, setIsModalOpen] = useState(false);
