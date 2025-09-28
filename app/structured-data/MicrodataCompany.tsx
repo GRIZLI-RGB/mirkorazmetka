@@ -11,31 +11,60 @@ type MicrodataCompanyProps = {
 	lang: LangType;
 };
 
+const texts = {
+	ru: {
+		defaultTitle: "Информация о МФО",
+		defaultCompany: "Название компании",
+		webDescription: (name: string) => `Условия займов и отзывы о ${name}`,
+		orgDescription: (name: string) =>
+			`Микрофинансовая организация ${name} - условия займов, отзывы клиентов`,
+		loanName: (name: string) => `Займ в ${name}`,
+		loanDescription: (name: string) =>
+			`Условия получения займа в микрофинансовой организации ${name}`,
+		tariffs: (name: string) => `Тарифы ${name}`,
+		tariff: (i: number) => `Тариф ${i + 1}`,
+	},
+	ua: {
+		defaultTitle: "Інформація про МФО",
+		defaultCompany: "Назва компанії",
+		webDescription: (name: string) => `Умови позик та відгуки про ${name}`,
+		orgDescription: (name: string) =>
+			`Мікрофінансова організація ${name} - умови позик, відгуки клієнтів`,
+		loanName: (name: string) => `Позика в ${name}`,
+		loanDescription: (name: string) =>
+			`Умови отримання позики в мікрофінансовій організації ${name}`,
+		tariffs: (name: string) => `Тарифи ${name}`,
+		tariff: (i: number) => `Тариф ${i + 1}`,
+	},
+};
+
 export const MicrodataCompany = ({
 	company,
 	data,
 	dates,
 	lang,
 }: MicrodataCompanyProps) => {
+	const t = texts[lang];
+
 	const webPageSchema = getDefaultWebPageSchema({
 		lang,
 		dates: {
 			date_modified: dates?.date_modified || new Date().toISOString(),
 			date_published: dates?.date_published || new Date().toISOString(),
 		},
-		title: data.name || "Информация о МФО",
-		description: `Условия займов и отзывы о ${data.name}`,
+		title: data.name || t.defaultTitle,
+		description: t.webDescription(data.name),
 		path: `/mfo/${company}`,
 	});
 
 	const organizationSchema = {
 		"@context": "https://schema.org",
 		"@type": "FinancialService",
-		name: data.name || "Название компании",
+		name: data.name || t.defaultCompany,
 		alternateName: data.legal_entity,
 		url: data.redirect_url || data.official_website,
 		logo: data.logo_url,
-		description: `Микрофинансовая организация ${data.name} - условия займов, отзывы клиентов`,
+		description: t.orgDescription(data.name),
 		identifier: data.nbu_license,
 		contactPoint: {
 			"@type": "ContactPoint",
@@ -45,9 +74,7 @@ export const MicrodataCompany = ({
 			areaServed: "UA",
 			availableLanguage: ["Ukrainian", "Russian"],
 		},
-		// address: emptyAddress,
 		priceRange: "$$",
-		// telephone: "-",
 		image: `https://mfoxa.com.ua/logo.png`,
 		aggregateRating: {
 			"@type": "AggregateRating",
@@ -58,28 +85,26 @@ export const MicrodataCompany = ({
 		},
 		hasOfferCatalog: {
 			"@type": "OfferCatalog",
-			name: `Тарифы ${data.name}`,
+			name: t.tariffs(data.name),
 			itemListElement:
 				data.tariffs?.map((tariff, index: number) => ({
 					"@type": "Offer",
-					name: tariff.name || `Тариф ${index + 1}`,
+					name: tariff.name || t.tariff(index),
 					price: tariff.max_amount,
 					priceCurrency: "UAH",
 					availability: "https://schema.org/InStock",
 				})) || [],
 		},
 	};
-	console.log(data);
 
 	const loanSchema = {
 		"@context": "https://schema.org",
 		"@type": "LoanOrCredit",
-		name: `Займ в ${data.name}`,
-		description: `Условия получения займа в микрофинансовой организации ${data.name}`,
+		name: t.loanName(data.name),
+		description: t.loanDescription(data.name),
 		provider: {
 			"@type": "FinancialService",
 			name: data.name,
-			// address: emptyAddress,
 			priceRange: "$$",
 			telephone: data?.phone || "-",
 			image: `https://mfoxa.com.ua/logo.png`,

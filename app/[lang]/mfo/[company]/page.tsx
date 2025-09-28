@@ -19,7 +19,6 @@ import { ScrollReset } from "@/app/components/ScrollReset";
 import ClientOnly from "@/app/components/ClientOnly";
 import { LastReviews } from "@/app/components/Home/LastRewiews";
 import { localePrefix } from "@/app/config/routesMap";
-// import { PageReview } from "@/app/structured-data/PageReview";
 import { LangType } from "@/app/services/HomeService";
 
 export const revalidate = 60;
