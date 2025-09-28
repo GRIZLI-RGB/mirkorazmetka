@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 
 import { LangType } from "../services/HomeService";
 import { addressByLang } from "./defaults";
+import { useEffect } from "react";
 
 export default function StructuredData({ lang }: { lang: LangType }) {
 	const pathname = usePathname();
@@ -98,6 +99,16 @@ export default function StructuredData({ lang }: { lang: LangType }) {
 	};
 
 	const schemas = [organization, website, breadcrumbs];
+
+	useEffect(() => {
+		const scripts = document.querySelectorAll<HTMLScriptElement>(
+			'script[id^="structured-data"]'
+		);
+
+		scripts.forEach((el, idx) => {
+			if (idx > 0) el.remove();
+		});
+	}, []);
 
 	return (
 		<>
