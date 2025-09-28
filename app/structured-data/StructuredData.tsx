@@ -101,13 +101,20 @@ export default function StructuredData({ lang }: { lang: LangType }) {
 	const schemas = [organization, website, breadcrumbs];
 
 	useEffect(() => {
-		const scripts = document.querySelectorAll<HTMLScriptElement>(
-			'script[id^="structured-data"]'
-		);
+		const seen = new Set<string>();
 
-		scripts.forEach((el, idx) => {
-			if (idx > 0) el.remove();
-		});
+		document
+			.querySelectorAll<HTMLScriptElement>(
+				'script[id^="structured-data"]'
+			)
+			.forEach((el) => {
+				const content = el.innerHTML.trim();
+				if (seen.has(content)) {
+					el.remove();
+				} else {
+					seen.add(content);
+				}
+			});
 	}, []);
 
 	return (
