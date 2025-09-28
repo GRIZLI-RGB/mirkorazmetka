@@ -78,16 +78,18 @@ export default function CompanyRewiwsClient({
 	dates,
 	lang,
 	mfoData,
+	initialReviews
 }: {
 	slug: string;
 	dates?: PageDatesResponse | null;
 	lang: string;
-	mfoData: MfoDetails; // Replace with MfoDetails type
+	mfoData: MfoDetails; 
+	initialReviews: ReviewsApiResponse
 }) {
 	const t = useTranslations("Reviews");
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [openReplyId, setOpenReplyId] = useState<number | null>(null);
-	const [data, setData] = useState<ReviewsApiResponse | null>(null);
+	const [data, setData] = useState<ReviewsApiResponse | null>(initialReviews);
 	const [visibleCount, setVisibleCount] = useState(6);
 	const [sort, setSort] = useState<SortType>("newest");
 
@@ -131,7 +133,7 @@ export default function CompanyRewiwsClient({
 		};
 
 		fetchReviews();
-	}, [slug, sort]); // <== добавили зависимость от sort
+	}, [slug, sort]);
 
 	const handleVote = async (id: number, type: "helpful" | "not_helpful") => {
 		if (!data) return;
@@ -365,14 +367,6 @@ export default function CompanyRewiwsClient({
 											{review.author_name ||
 												t(`reviews.${i}.user`)}
 										</p>
-										{/* <p
-                        className="font-[500] text-[12px] leading-[100%] text-[#724dea]"
-                        style={{ fontFamily: "var(--Manrope)" }}
-                      >
-                        <time dateTime={review.created_at}>
-                          {new Date(review.created_at).toLocaleDateString()}
-                        </time>
-                      </p> */}
 										<p className="font-medium text-[10px] leading-[180%] text-[#67677A] flex items-start gap-1">
 											<span className="font-bold text-[20px] leading-[138%] text-[#724DEA]">
 												{review.rating}
