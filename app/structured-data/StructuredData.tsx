@@ -103,6 +103,7 @@ export default function StructuredData({ lang }: { lang: LangType }) {
 		<>
 			{schemas.map((schema, i) => (
 				<script
+					id={`structured-data-${i}`}
 					key={i}
 					type="application/ld+json"
 					dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
