@@ -234,6 +234,7 @@ export const MicrodataQAP = ({ questions, dates }: MicrodataQAPProps) => {
 
 	return (
 		<script
+			id="qap-questions"
 			type="application/ld+json"
 			dangerouslySetInnerHTML={{ __html: JSON.stringify(qaSchema) }}
 		/>

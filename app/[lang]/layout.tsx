@@ -78,7 +78,7 @@ export default async function Layout({
 		messages = (await import("../messages/ru.json")).default;
 	}
 	return (
-		<html lang={lang} suppressHydrationWarning>
+		<html lang={lang === "ru" ? "ru" : "uk"} suppressHydrationWarning>
 			<body suppressHydrationWarning>
 				<Toaster position="top-right" reverseOrder={false} />
 
