@@ -157,68 +157,68 @@
 // };
 
 export const MicrodataQAP = () => {
-  if (typeof window !== "undefined") return null;
+	if (typeof window !== "undefined") return null;
 
-  const qaSchema = {
-    "@context": "https://schema.org",
-    "@type": "QAPage",
-    datePublished: "2025-10-02T12:00:00Z",
-    dateModified: "2025-10-02T12:00:00Z",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "Как подать заявку?",
-        text: "Как подать заявку?",
-        author: { "@type": "Person", name: "Иван" },
-        dateCreated: "2025-09-01T10:00:00Z",
-        upvoteCount: 0,
-        downvoteCount: 0,
-        answerCount: 1,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Нужно заполнить форму на сайте.",
-          dateCreated: "2025-09-01T11:00:00Z",
-          upvoteCount: 0,
-          downvoteCount: 0,
-          author: { "@type": "Organization", name: "MFoxa" },
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Какие нужны документы?",
-        text: "Какие нужны документы?",
-        author: { "@type": "Person", name: "Ольга" },
-        dateCreated: "2025-09-02T10:00:00Z",
-        upvoteCount: 0,
-        downvoteCount: 0,
-        answerCount: 0,
-      },
-      {
-        "@type": "Question",
-        name: "Сколько длится рассмотрение?",
-        text: "Сколько длится рассмотрение?",
-        author: { "@type": "Person", name: "Петр" },
-        dateCreated: "2025-09-03T10:00:00Z",
-        upvoteCount: 0,
-        downvoteCount: 0,
-        answerCount: 1,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Обычно до 24 часов.",
-          dateCreated: "2025-09-03T12:00:00Z",
-          upvoteCount: 0,
-          downvoteCount: 0,
-          author: { "@type": "Organization", name: "MFoxa" },
-        },
-      },
-    ],
-  };
+	const qaSchema = {
+		"@context": "https://schema.org",
+		"@type": "QAPage",
+		datePublished: "2025-10-02T12:00:00Z",
+		dateModified: "2025-10-02T12:00:00Z",
+		mainEntity: [
+			{
+				"@type": "Question",
+				name: "Как подать заявку? name",
+				text: "Как подать заявку?",
+				author: { "@type": "Person", name: "Иван" },
+				dateCreated: "2025-09-01T10:00:00Z",
+				upvoteCount: 0,
+				downvoteCount: 0,
+				answerCount: 1,
+				acceptedAnswer: {
+					"@type": "Answer",
+					text: "Нужно заполнить форму на сайте.",
+					dateCreated: "2025-09-01T11:00:00Z",
+					upvoteCount: 0,
+					downvoteCount: 0,
+					author: { "@type": "Organization", name: "MFoxa" },
+				},
+			},
+			{
+				"@type": "Question",
+				name: "Какие нужны документы? name",
+				text: "Какие нужны документы?",
+				author: { "@type": "Person", name: "Ольга" },
+				dateCreated: "2025-09-02T10:00:00Z",
+				upvoteCount: 0,
+				downvoteCount: 0,
+				answerCount: 0,
+			},
+			{
+				"@type": "Question",
+				name: "Сколько длится рассмотрение? name",
+				text: "Сколько длится рассмотрение?",
+				author: { "@type": "Person", name: "Петр" },
+				dateCreated: "2025-09-03T10:00:00Z",
+				upvoteCount: 0,
+				downvoteCount: 0,
+				answerCount: 1,
+				acceptedAnswer: {
+					"@type": "Answer",
+					text: "Обычно до 24 часов.",
+					dateCreated: "2025-09-03T12:00:00Z",
+					upvoteCount: 0,
+					downvoteCount: 0,
+					author: { "@type": "Organization", name: "MFoxa" },
+				},
+			},
+		],
+	};
 
-  return (
-    <script
-      id="qap-questions"
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(qaSchema) }}
-    />
-  );
+	return (
+		<script
+			id="qap-questions"
+			type="application/ld+json"
+			dangerouslySetInnerHTML={{ __html: JSON.stringify(qaSchema) }}
+		/>
+	);
 };
