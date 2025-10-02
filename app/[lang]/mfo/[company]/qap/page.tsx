@@ -65,9 +65,9 @@ export default async function Qap({ params }: Props) {
 	return (
 		<>
 			<MicrodataQAP
-				// questions={questions.data}
-				// locale={lang as "ua" | "ru"}
-				// dates={dates}
+				questions={questions.data}
+				locale={lang as "ua" | "ru"}
+				dates={dates}
 			/>
 			<QapClient
 				company={company}
