@@ -45,12 +45,12 @@ export async function generateMetadata({
 			},
 			alternates: {
 				languages: {
-					"uk-UA": "https://mfo.com/",
-					"ru-UA": "https://mfo.com/ru/",
-					"x-default": "https://mfo.com/",
+					"uk-UA": "https://mfoxa.com.ua/",
+					"ru-UA": "https://mfoxa.com.ua/ru/",
+					"x-default": "https://mfoxa.com.ua",
 				},
 				canonical:
-					lang === "ua" ? "https://mfo.com/" : "https://mfo.com/ru/",
+					lang === "ua" ? "https://mfoxa.com.ua/" : "https://mfoxa.com.ua/ru/",
 			},
 		} as Metadata;
 	} catch (error) {

@@ -14,7 +14,7 @@ type InfoHelpfulClientProps = {
 
 export default function InfoHelpfulClient({
 	randomAuthor,
-  locale
+	locale,
 }: InfoHelpfulClientProps) {
 	const t = useTranslations("infoHelpful");
 
@@ -57,7 +57,7 @@ export default function InfoHelpfulClient({
 					pageUrl={
 						typeof window !== "undefined"
 							? window.location.href
-							: "https://mfo.com/"
+							: "https://mfoxa.com.ua/"
 					}
 				/>
 			)}
